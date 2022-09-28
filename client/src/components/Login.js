@@ -1,9 +1,11 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
     <Wrapper>
-      <Button>Login</Button>
+      <Button to="/login">Login</Button>
+
     </Wrapper>
   );
 };
@@ -18,11 +20,14 @@ const Wrapper = styled.div`
   padding:10px;
 `;
 
-const Button = styled.button`
+const Button = styled(Link)`
   background-color: #6F38C5;
-  border-radius: 5px;
+  border-radius: 6px;
   max-height: 50px;
   width: 60px;
+  padding:5px;
+  text-align: center;
   border: none;
   color: var(--color-beige);
+  text-decoration: none;
 `;

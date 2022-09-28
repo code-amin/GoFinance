@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import SearchBar from "./SearchBar";
-import Login from "./Login";
+import Login from "../Login";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
     <Wrapper>
-      <Logo>GoFinance</Logo>
+      <Logo to="/">GoFinance</Logo>
       <SearchBar />
       <Login />
     </Wrapper>
@@ -22,14 +23,15 @@ const Wrapper = styled.div`
   justify-content: space-between;
   background-color: #8758ff;
   color: #8758ff;
-  padding:3px;
+  padding: 3px;
 `;
 
-const Logo = styled.div`
+const Logo = styled(Link)`
   margin: 10px;
   font-weight: bold;
   color: white;
-  background-color: #5cb8e4;
-  border-radius: 5px;
+  border: 2px solid var(--color-beige);
+  border-radius: 6px;
   padding: 6px;
+  text-decoration: none;
 `;
