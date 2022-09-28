@@ -9,6 +9,14 @@ export default createGlobalStyle`
     font-family: Helvetica, Arial,  sans-serif;
   }
 
+  :root {
+    --color-beige: #F2F2F2;
+    --color-black: #181818;
+    --color-purple: #8758FF;
+    --color-blue: #5CB8E4;
+  }
+
+
   html, body {
     max-width: 100vw;
   }
@@ -58,5 +66,5 @@ export default createGlobalStyle`
   body {
 
   }
-
+  
 `;

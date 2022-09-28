@@ -14,15 +14,15 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  border-bottom: 1px gray solid;
   min-height: 50px;
+  padding:10px;
 `;
 
 const Button = styled.button`
-  background-color: #ffb562;
+  background-color: #6F38C5;
   border-radius: 5px;
-  max-height: 20px;
-  width: 40px;
+  max-height: 50px;
+  width: 60px;
   border: none;
-  color: #F87474;
+  color: var(--color-beige);
 `;

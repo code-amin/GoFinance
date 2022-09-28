@@ -8,10 +8,10 @@ const App = () => {
   return (
     <Wrapper>
       <Router>
-        <GlobalStyles/>
+        <GlobalStyles />
         <Header />
         <Routes>
-          <Route path="/" element={<Home/>} />
+          <Route path="/" element={<Home />} />
           <Route path="/profile" element={<></>} />
           <Route path="/favorites" element={<></>} />
           <Route path="/stocks" element={<></>} />
@@ -24,4 +24,5 @@ const App = () => {
 
 export default App;
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+`;
