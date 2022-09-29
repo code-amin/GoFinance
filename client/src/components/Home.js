@@ -8,7 +8,7 @@ const Home = () => {
     <Wrapper>
       <Header>
         {" "}
-        Your <Underline>favorite stocks,</Underline> at any time 🚀{" "}
+        Your <Underline>favorite stocks</Underline> at any time 🚀{" "}
       </Header>
       <Profile />
       <FeaturedSection>
