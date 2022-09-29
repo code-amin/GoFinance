@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+import Profile from "./Profile";
+
 const Home = () => {
   return (
     <Wrapper>
@@ -8,6 +10,7 @@ const Home = () => {
         {" "}
         Your <Underline>favorite stocks,</Underline> at any time 🚀{" "}
       </Header>
+      <Profile />
       <FeaturedSection>
         <h2>$TSLA</h2>
         <StockDiv></StockDiv>
@@ -40,7 +43,7 @@ const Header = styled.h1`
 
 const Underline = styled.p`
   text-decoration: underline;
-  color:var(--color-purple);
+  color: var(--color-purple);
 `;
 
 const FeaturedSection = styled.div`

@@ -2,17 +2,19 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const Login = () => {
-  const { loginWithRedirect } = useAuth0();
+const Logout = () => {
+  const { logout } = useAuth0();
 
   return (
     <Wrapper>
-      <Button onClick={() => loginWithRedirect()}>Login</Button>
+      <Button onClick={() => logout({ returnTo: window.location.origin })}>
+        Logout
+      </Button>
     </Wrapper>
   );
 };
 
-export default Login;
+export default Logout;
 
 const Wrapper = styled.div`
   display: flex;

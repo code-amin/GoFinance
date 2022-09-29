@@ -2,6 +2,7 @@ import styled from "styled-components";
 import SearchBar from "./SearchBar";
 import Login from "../Login";
 import { Link } from "react-router-dom";
+import Logout from "../Logout";
 
 const Navbar = () => {
   return (
@@ -9,6 +10,7 @@ const Navbar = () => {
       <Logo to="/">GoFinance</Logo>
       <SearchBar />
       <Login />
+      <Logout />
     </Wrapper>
   );
 };
