@@ -6,7 +6,7 @@ const Home = () => {
     <Wrapper>
       <Header>
         {" "}
-        Your <Underline>favorite stocks</Underline> at any time 🚀{" "}
+        Your <Underline>favorite stocks,</Underline> at any time 🚀{" "}
       </Header>
       <FeaturedSection>
         <h2>$TSLA</h2>
@@ -33,13 +33,14 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.h1`
-  color: #8758ff;
+  color: black;
   padding: 140px 0px 20px 20px;
   width: 50%;
 `;
 
 const Underline = styled.p`
   text-decoration: underline;
+  color:var(--color-purple);
 `;
 
 const FeaturedSection = styled.div`
@@ -58,6 +59,7 @@ const ViewFeatured = styled(Link)`
   font-style: italic;
 `;
 
+// Stock feed section
 const Feed = styled.div`
   border: 1px red dashed;
   position: relative;

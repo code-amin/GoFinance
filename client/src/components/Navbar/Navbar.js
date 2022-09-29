@@ -3,7 +3,7 @@ import SearchBar from "./SearchBar";
 import Login from "../Login";
 import { Link } from "react-router-dom";
 
-const Header = () => {
+const Navbar = () => {
   return (
     <Wrapper>
       <Logo to="/">GoFinance</Logo>
@@ -13,7 +13,7 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Navbar;
 
 const Wrapper = styled.div`
   min-height: 50px;
