@@ -7,14 +7,14 @@ const Profile = () => {
     return <div>Loading ...</div>;
   }
 
-  console.log(user);
+  // console.log(user);
 
   return (
     isAuthenticated && (
       <div>
-        <img src={user.picture} alt={user.name} />
-        <h2>{user.name}</h2>
-        <p>{user.email}</p>
+        Profile Picture: <img src={user.picture} alt={user.name} />
+        <h2>Username: {user.name}</h2>
+        <p>Email: {user.email}</p>
       </div>
     )
   );

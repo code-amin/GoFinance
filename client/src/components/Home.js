@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import Profile from "./Profile";
-
 const Home = () => {
 
   return (

@@ -15,19 +15,21 @@ const Navbar = () => {
       <Logo to="/">GoFinance</Logo>
       <SearchBar />
 
-      <ConnectionSection>
-        <Login />
-        {isAuthenticated ? <ProfileIcon to="/Profile" /> : console.log("hi")}
-
-        <ProfileIconSection>
-          <BsPersonCircle />
-        </ProfileIconSection>
-        <Logout to="/" />
-      </ConnectionSection>
+      <LoginSection>
+        {isAuthenticated ? (
+          <>
+            <ProfileIconSection to="/Profile">
+              <BsPersonCircle />
+            </ProfileIconSection>
+            <Logout to="/" />
+          </>
+        ) : (
+          <Login />
+        )}
+      </LoginSection>
     </Wrapper>
   );
 };
-
 
 export default Navbar;
 const Wrapper = styled.div`
@@ -39,7 +41,7 @@ const Wrapper = styled.div`
   background-color: #8758ff;
   color: #8758ff;
   padding: 3px;
-  `;
+`;
 
 const Logo = styled(Link)`
   margin: 10px;
@@ -49,10 +51,10 @@ const Logo = styled(Link)`
   border-radius: 6px;
   padding: 6px;
   text-decoration: none;
-  `;
+`;
 
-  const ConnectionSection = styled.div`
-   min-height: 50px;
+const LoginSection = styled.div`
+  min-height: 50px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -60,13 +62,14 @@ const Logo = styled(Link)`
   background-color: #8758ff;
   color: #8758ff;
   padding: 3px;
-  `
+`;
 
-  const ProfileIconSection = styled.div`
-    top: 100px;
-    width: 1000px;
-    color: red;
-  `;
+const ProfileIconSection = styled(Link)`
+  color: white;
+  font-size: 30px;
+  position: relative;
+  top: 7px;
+`;
 const ProfileIcon = styled.img`
   border: 1px red solid;
 `;
