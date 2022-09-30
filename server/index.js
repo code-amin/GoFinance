@@ -9,5 +9,5 @@ express()
   })
 
   .listen(2000, () => {
-    console.log(`Example app listening on port 2000`);
+    console.log(`GoFinance app listening on port 2000`);
   });

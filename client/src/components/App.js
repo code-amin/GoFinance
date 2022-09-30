@@ -3,6 +3,7 @@ import GlobalStyles from "./GlobalStyles";
 import styled from "styled-components";
 import Home from "./Home";
 import Navbar from "./Navbar/Navbar";
+import Profile from "./Profile";
 import Stock from "./Stock";
 import Stocks from "./Stocks";
 import Footer from "./Footer";
@@ -15,7 +16,7 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<></>} />
+          <Route path="/profile" element={<Profile/>} />
           <Route path="/favorites" element={<></>} />
           <Route path="/stocks" element={<Stocks />} />
           <Route path="/:stock" element={<Stock />} />

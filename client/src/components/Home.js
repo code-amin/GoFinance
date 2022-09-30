@@ -4,13 +4,14 @@ import { Link } from "react-router-dom";
 import Profile from "./Profile";
 
 const Home = () => {
+
   return (
     <Wrapper>
       <Header>
         {" "}
         Your <Underline>favorite stocks</Underline> at any time 🚀{" "}
       </Header>
-      <Profile />
+
       <FeaturedSection>
         <h2>$TSLA</h2>
         <StockDiv></StockDiv>
