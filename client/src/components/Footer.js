@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   position:fixed;
   bottom:10px;
   margin: 0px auto;
-  height: 160px;
+  height:15%;
   width:100%;
   background-color:indigo;
 `;
