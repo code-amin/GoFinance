@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import GlobalStyles from "./GlobalStyles";
-import styled from "styled-components";
+
 import Home from "./Home";
 import Navbar from "./Navbar/Navbar";
 import Profile from "./Profile";
@@ -10,23 +10,19 @@ import Footer from "./Footer";
 
 const App = () => {
   return (
-    <Wrapper>
-      <Router>
-        <GlobalStyles />
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile/>} />
-          <Route path="/favorites" element={<></>} />
-          <Route path="/stocks" element={<Stocks />} />
-          <Route path="/:stock" element={<Stock />} />
-        </Routes>
-      </Router>
+    <Router>
+      <GlobalStyles />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/favorites" element={<></>} />
+        <Route path="/stocks" element={<Stocks />} />
+        <Route path="/stock/:stock" element={<Stock />} />
+      </Routes>
       <Footer />
-    </Wrapper>
+    </Router>
   );
 };
 
 export default App;
-
-const Wrapper = styled.div``;
