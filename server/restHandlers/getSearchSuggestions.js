@@ -4,9 +4,10 @@ const { REACT_APP_API_KEY } = process.env;
 
 const getSearchSuggestions = async (req, res) => {
   console.log("getSearchSuggestions api triggered");
-  const query = "tes";
+  const {query} = req.params
+  console.log(query);
+  // const query = "tes";
   const url = `https://seeking-alpha.p.rapidapi.com/v2/auto-complete?query=${query}&type=symbols`;
-
   const options = {
     method: "GET",
     headers: {
@@ -72,13 +73,15 @@ const getSearchSuggestions = async (req, res) => {
   };
   // const parsedResponse = await response.json();
 
-  const symbols = parsedResponse.symbols.map((symbol) => {
-    const companyInfo = `${(symbol.slug, symbol.content)}`;
-    return companyInfo;
-  });
+  // const symbols = parsedResponse.symbols.map((symbol) => {
+  //   // const companyInfo = `${(symbol.slug, symbol.content)}`;
+  //   const companyInfo = []
+  //   companyInfo.push(`${(symbol.slug, symbol.content)}`)
+  //   return companyInfo;
+  // });
 
   parsedResponse
-    ? res.status(200).json({ status: 200, data: symbols })
+    ? res.status(200).json({ status: 200, data: parsedResponse.symbols })
     : res.status(400).json({ status: 400, message: "error while fetching" });
 };
 

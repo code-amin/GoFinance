@@ -13,7 +13,7 @@ express()
 
   .get("/api/get-quote", getQuote)
   .get("/api/get-stock/:stock", getStock)
-  .get("/api/get-search-suggestions", getSearchSuggestions)
+  .get("/api/get-search-suggestions/:query", getSearchSuggestions)
 
   .get("*", (req, res) => {
     res.status(404).json({
