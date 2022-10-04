@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import Suggestion from "./Suggestion";
 
 const SearchBar = () => {
   const [query, setQuery] = useState("");
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState([]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     fetch(`/api/get-search-suggestions/${query}`)
@@ -17,33 +18,27 @@ const SearchBar = () => {
 
   return (
     <Wrapper>
-      <>{result && (
-        <>
-          {result.map((suggestion)=>{
-            return (<Ul><Li>{suggestion.slug}</Li></Ul>)
-          })}
-        </>
-      )}</>
-      <Search
-        type="text"
-        placeholder="Search..."
-        onChange={(e) => {
-          setQuery(e.target.value);
-        }}
-      />
-      <button onClick={handleSubmit}>GO</button>
-      {/* {result && (
-        <>
-          {" "}
-          {
-            // <Ul>
-            //   {result.map((suggestion) => {
-            //     return <Li><Link to={`/stock/${suggestion}`}>{suggestion}</Link>{<br></br>}</Li>;
-            //   })}
-            // </Ul>
-          }{" "}
-        </>
-      )} */}
+      <div style={{ display: "flex" }}>
+        <Search
+          type="text"
+          placeholder="Search..."
+          onChange={(e) => {
+            setQuery(e.target.value);
+          }}
+        />
+        <button onClick={handleSubmit}>GO</button>
+      </div>
+      <>
+        {result && (
+          <>
+            <Ul>
+              {result.map((suggestion) => {
+                return <Suggestion data={suggestion} setResult={setResult} />;
+              })}
+            </Ul>
+          </>
+        )}
+      </>
     </Wrapper>
   );
 };
@@ -52,11 +47,10 @@ export default SearchBar;
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   min-height: 50px;
   max-height: 50px;
   flex-direction: column;
-
 `;
 
 const Search = styled.input`
@@ -70,9 +64,8 @@ const Search = styled.input`
 const Ul = styled.ul`
   box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
   color: gray;
-  flex-direction: column;
-
   cursor: pointer;
+  z-index: 1000;
 `;
 const Li = styled.li`
   color: black;

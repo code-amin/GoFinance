@@ -1,19 +1,24 @@
 import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
-  *,
+  *  ,
   *:before,
   *:after {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     font-family: Helvetica, Arial,  sans-serif;
   }
+  *::selection {
+  color: var(--color-beige);
+  background: var(--color-purple);
+}
 
   :root {
     --color-beige: #F2F2F2;
     --color-black: #181818;
     --color-purple: #8758FF;
     --color-blue: #5CB8E4;
+    
   }
 
 

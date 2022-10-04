@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-
+import Featured from "./Featured";
 const Home = () => {
-
   return (
     <Wrapper>
       <Header>
@@ -11,8 +10,7 @@ const Home = () => {
       </Header>
 
       <FeaturedSection>
-        <h2>$TSLA</h2>
-        <StockDiv></StockDiv>
+        <Featured></Featured>
         <ViewFeatured to="/:stock">View stock... →</ViewFeatured>
       </FeaturedSection>
 
@@ -50,12 +48,6 @@ const FeaturedSection = styled.div`
   margin: 30px;
 `;
 
-const StockDiv = styled.div`
-  height: 400px;
-  width: 200px;
-  border: 1px red dashed;
-`;
-
 const ViewFeatured = styled(Link)`
   text-decoration: none;
   font-style: italic;
@@ -65,6 +57,7 @@ const ViewFeatured = styled(Link)`
 const Feed = styled.div`
   border: 1px red dashed;
   position: relative;
+  
 `;
 
 const StockList = styled.ul`
