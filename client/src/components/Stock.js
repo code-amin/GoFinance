@@ -1,8 +1,12 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Stock = () => {
+  const { user, favourite, isAuthenticated } = useAuth0();
+  const { email } = user;
+
   // const [data, setData] = useState(null);
   const { stock } = useParams();
 
@@ -15,6 +19,23 @@ const Stock = () => {
   //       setData(data.data[0].attributes);
   //     });
   // }, []);
+  useEffect(() => {
+    if (isAuthenticated) {
+      const getFavs = async () => {
+        const favourites = await fetch(`/api/post-favourites/`, {
+          method: "POST",
+          body: JSON.stringify({
+            email
+          }),
+          headers: { "Content-Type": "application/json" },
+          Accept: "application/json",
+        });
+        const x = await favourites.json()
+        console.log(x);
+      };
+      getFavs();
+    }
+  }, []);
 
   // TEMPORARY TO AVOID TOO MANY API REQUESTS
   const data = {
@@ -79,6 +100,15 @@ const Stock = () => {
     <Wrapper>
       {data && (
         <>
+          {/* {isAuthenticated ? (
+            <Favourite
+              onClick={() => {
+                setFavourite(!isFavourite);
+              }}
+            >
+              {isFavourite ? "+" : "-"}
+            </Favourite>
+          ): '(login for favourites)'} */}
           <h1>{data.companyName}</h1>
           <h2>
             {"$" + stock.toUpperCase()}
@@ -126,4 +156,13 @@ const Wrapper = styled.div`
   position: relative;
   left: 25vw;
   max-width: 500px;
+`;
+
+const Favourite = styled.button`
+  width: 25px;
+  font-size: 25px;
+
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: var(--color-beige);
 `;

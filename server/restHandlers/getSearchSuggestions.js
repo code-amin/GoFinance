@@ -3,9 +3,9 @@ require("dotenv").config();
 const { REACT_APP_API_KEY } = process.env;
 
 const getSearchSuggestions = async (req, res) => {
-  console.log("getSearchSuggestions api triggered");
+  // console.log("getSearchSuggestions api triggered");
   const {query} = req.params
-  console.log(query);
+  // console.log(query);
   // const query = "tes";
   const url = `https://seeking-alpha.p.rapidapi.com/v2/auto-complete?query=${query}&type=symbols`;
   const options = {

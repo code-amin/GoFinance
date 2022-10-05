@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 const Suggestion = ({ data, setResult }) => {
-  console.log(data);
+  // console.log(data);
   const { name, content } = data;
   const navigate = useNavigate();
 
