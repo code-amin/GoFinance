@@ -8,7 +8,6 @@ const { getStock } = require("./restHandlers/getStock");
 const { getSearchSuggestions } = require("./restHandlers/getSearchSuggestions");
 const { addFavourite } = require("./restHandlers/addFavourite");
 const { removeFavourite } = require("./restHandlers/removeFavourite");
-const { postFavourites } = require("./restHandlers/postFavourites");
 const { getFavourites } = require("./restHandlers/getFavourites");
 
 express()
@@ -20,7 +19,7 @@ express()
   .get("/api/get-search-suggestions/:query", getSearchSuggestions)
   .post("/api/add-favourite/", addFavourite)
   .get("/api/get-favourites/:email", getFavourites)
-  .get("/api/remove-favourite", removeFavourite)
+  .patch("/api/remove-favourite", removeFavourite)
 
   .get("*", (req, res) => {
     res.status(404).json({

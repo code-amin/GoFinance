@@ -7,7 +7,16 @@ const Profile = () => {
     return <div>Loading ...</div>;
   }
 
+  const fetchFavourite = async () => {
+    if (isAuthenticated) {
+      const { email } = user;
+      const fetchResult = await fetch(`/api/get-favourites/${email}`);
+      const parsedResult = await fetchResult.json();
 
+      console.log(parsedResult);
+    }
+  };
+  fetchFavourite();
   console.log(user);
 
   return (

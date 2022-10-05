@@ -18,9 +18,9 @@ const removeFavourite = async (req, res) => {
     const db = client.db("db-name");
     const removedFavourite = await db
       .collection("users")
-      .updateOne({ email: email }, { $push: { favourite: ticker } });
+      .updateOne({ email: email }, { $pull: { favourite: ticker } });
 
-      removedFavourite
+    removedFavourite
       ? res.status(200).json({ status: 200, data: removedFavourite })
       : res.status(400).json({ status: 400, message: "error while fetching" });
   } catch (e) {

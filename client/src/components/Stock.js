@@ -6,7 +6,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 const Stock = () => {
   const { user, isAuthenticated } = useAuth0();
   const [favourites, setFavourites] = useState(null);
-  const [isFavourite, setIsFavourite] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFavourite, setIsFavourite] = useState(false);
   // const [data, setData] = useState(null);
   const { stock } = useParams();
 
@@ -20,19 +21,29 @@ const Stock = () => {
   //     });
   // }, []);
   useEffect(() => {
-    if (isAuthenticated) {
-      const { email } = user;
-      fetch(`/api/get-favourites/${email}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setFavourites(data.data);
-        });
-    }
+    const fetchFavourite = async () => {
+      try {
+        if (isAuthenticated) {
+          const { email } = user;
+          const fetchResult = await fetch(`/api/get-favourites/${email}`);
+          const parsedResult = await fetchResult.json();
+
+          setFavourites(parsedResult.data ?? []);
+          setIsFavourite(favourites.includes(stock));
+        }
+      } catch (error) {
+        console.message(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchFavourite();
   }, [stock]);
 
   const handleFavourites = () => {
     const { email } = user;
-    if (favourites.includes(stock)) {
+    setIsFavourite(!isFavourite);
+    if (isFavourite) {
       fetch("/api/remove-favourite/", {
         method: "PATCH",
         body: JSON.stringify({
@@ -42,7 +53,8 @@ const Stock = () => {
         headers: { "Content-Type": "application/json" },
         Accept: "application/json",
       });
-      setFavourites([...favourites, stock]);
+      setFavourites(favourites.filter((s) => s !== stock));
+      console.log(`removed ${stock}`);
     } else {
       fetch("/api/add-favourite/", {
         method: "POST",
@@ -54,6 +66,7 @@ const Stock = () => {
         Accept: "application/json",
       });
       setFavourites([...favourites, stock]);
+      console.log(`added ${stock}`);
     }
   };
   // TEMPORARY TO AVOID TOO MANY API REQUESTS
@@ -115,31 +128,33 @@ const Stock = () => {
     low52: 274.77,
   };
 
+  if (isLoading) {
+    return <>Loading...</>;
+  }
+
   return (
     <Wrapper>
-      <>
-        {favourites && (
-          <>
-            {favourites.includes(stock) ? (
-              <button
-                onClick={() => {
-                  handleFavourites();
-                }}
-              >
-                remove from favourites
-              </button>
-            ) : (
-              <button
-                onClick={() => {
-                  handleFavourites();
-                }}
-              >
-                add to favourites
-              </button>
-            )}
-          </>
-        )}
-      </>
+      {favourites && (
+        <>
+          {isFavourite ? (
+            <ToggleFavourite
+              onClick={() => {
+                handleFavourites();
+              }}
+            >
+              ➖ remove from favourites
+            </ToggleFavourite>
+          ) : (
+            <ToggleFavourite
+              onClick={() => {
+                handleFavourites();
+              }}
+            >
+              ➕ add to favourites
+            </ToggleFavourite>
+          )}
+        </>
+      )}
       {data && (
         <>
           <h1>{data.companyName}</h1>
@@ -191,10 +206,8 @@ const Wrapper = styled.div`
   max-width: 500px;
 `;
 
-const Favourite = styled.button`
-  width: 25px;
-  font-size: 25px;
-
+const ToggleFavourite = styled.button`
+  font-size: 15px;
   border: 1px solid black;
   border-radius: 10px;
   background-color: var(--color-beige);
