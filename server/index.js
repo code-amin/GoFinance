@@ -9,6 +9,7 @@ const { getSearchSuggestions } = require("./restHandlers/getSearchSuggestions");
 const { addFavourite } = require("./restHandlers/addFavourite");
 const { removeFavourite } = require("./restHandlers/removeFavourite");
 const { postFavourites } = require("./restHandlers/postFavourites");
+const { getFavourites } = require("./restHandlers/getFavourites");
 
 express()
   .use(morgan("tiny"))
@@ -17,8 +18,8 @@ express()
   .get("/api/get-quote", getQuote)
   .get("/api/get-stock/:stock", getStock)
   .get("/api/get-search-suggestions/:query", getSearchSuggestions)
-  .get("/api/add-favourite/", addFavourite)
-  .post("/api/post-favourites/", postFavourites)
+  .post("/api/add-favourite/", addFavourite)
+  .get("/api/get-favourites/:email", getFavourites)
   .get("/api/remove-favourite", removeFavourite)
 
   .get("*", (req, res) => {

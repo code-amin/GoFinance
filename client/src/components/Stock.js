@@ -4,9 +4,9 @@ import { useParams, Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Stock = () => {
-  const { user, favourite, isAuthenticated } = useAuth0();
-  const { email } = user;
-
+  const { user, isAuthenticated } = useAuth0();
+  const [favourites, setFavourites] = useState(null);
+  const [isFavourite, setIsFavourite] = useState(null);
   // const [data, setData] = useState(null);
   const { stock } = useParams();
 
@@ -21,22 +21,41 @@ const Stock = () => {
   // }, []);
   useEffect(() => {
     if (isAuthenticated) {
-      const getFavs = async () => {
-        const favourites = await fetch(`/api/post-favourites/`, {
-          method: "POST",
-          body: JSON.stringify({
-            email
-          }),
-          headers: { "Content-Type": "application/json" },
-          Accept: "application/json",
+      const { email } = user;
+      fetch(`/api/get-favourites/${email}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setFavourites(data.data);
         });
-        const x = await favourites.json()
-        console.log(x);
-      };
-      getFavs();
     }
-  }, []);
+  }, [stock]);
 
+  const handleFavourites = () => {
+    const { email } = user;
+    if (favourites.includes(stock)) {
+      fetch("/api/remove-favourite/", {
+        method: "PATCH",
+        body: JSON.stringify({
+          email,
+          ticker: stock,
+        }),
+        headers: { "Content-Type": "application/json" },
+        Accept: "application/json",
+      });
+      setFavourites([...favourites, stock]);
+    } else {
+      fetch("/api/add-favourite/", {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          ticker: stock,
+        }),
+        headers: { "Content-Type": "application/json" },
+        Accept: "application/json",
+      });
+      setFavourites([...favourites, stock]);
+    }
+  };
   // TEMPORARY TO AVOID TOO MANY API REQUESTS
   const data = {
     longDesc:
@@ -98,17 +117,31 @@ const Stock = () => {
 
   return (
     <Wrapper>
+      <>
+        {favourites && (
+          <>
+            {favourites.includes(stock) ? (
+              <button
+                onClick={() => {
+                  handleFavourites();
+                }}
+              >
+                remove from favourites
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  handleFavourites();
+                }}
+              >
+                add to favourites
+              </button>
+            )}
+          </>
+        )}
+      </>
       {data && (
         <>
-          {/* {isAuthenticated ? (
-            <Favourite
-              onClick={() => {
-                setFavourite(!isFavourite);
-              }}
-            >
-              {isFavourite ? "+" : "-"}
-            </Favourite>
-          ): '(login for favourites)'} */}
           <h1>{data.companyName}</h1>
           <h2>
             {"$" + stock.toUpperCase()}

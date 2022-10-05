@@ -8,27 +8,27 @@ const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
-const ticker = "AAPL";
-const tenant = "dev-2nqo5xwv";
 const addFavourite = async (req, res) => {
-  console.log("addfavourites  api triggered");
-  
-  console.log(req.body);
-  // const client = new MongoClient(REACT_APP_MONGO_URI);
-  // try {
-  //   await client.connect();
-  //   const db = client.db("db-name");
-  //   const finding = await db
-  //     .collection("users")
-  //     .updateOne({ tenant: tenant }, { $addToSet: { favourite: ticker } });
-  //   console.log(finding);
-  //   return finding;
-  // } catch (e) {
-  //   console.log(e);
-  //   client.close();
-  // }
-  // client.close();
-  // console.log("Success!");
+  console.log("addFavourite  api triggered");
+  const { email, ticker } = req.body;
+
+  const client = new MongoClient(REACT_APP_MONGO_URI);
+  try {
+    await client.connect();
+    const db = client.db("db-name");
+    const addedFavourites = await db
+      .collection("users")
+      .updateOne({ email: email }, { $push: { favourite: ticker } });
+
+    addedFavourites
+      ? res.status(200).json({ status: 200, data: addedFavourites })
+      : res.status(400).json({ status: 400, message: "error while fetching" });
+  } catch (e) {
+    console.log(e);
+    client.close();
+  }
+  client.close();
+  console.log("Success!");
 };
 
 module.exports = { addFavourite };
