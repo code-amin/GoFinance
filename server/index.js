@@ -3,7 +3,7 @@
 const express = require("express");
 const morgan = require("morgan");
 
-const { getQuote } = require("./restHandlers/getQuote");
+const { getNews } = require("./restHandlers/getNews");
 const { getStock } = require("./restHandlers/getStock");
 const { getSearchSuggestions } = require("./restHandlers/getSearchSuggestions");
 const { addFavourite } = require("./restHandlers/addFavourite");
@@ -14,7 +14,7 @@ express()
   .use(morgan("tiny"))
   .use(express.json())
 
-  .get("/api/get-quote", getQuote)
+  .get("/api/get-news/", getNews)
   .get("/api/get-stock/:stock", getStock)
   .get("/api/get-search-suggestions/:query", getSearchSuggestions)
   .post("/api/add-favourite/", addFavourite)

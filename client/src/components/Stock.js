@@ -8,7 +8,6 @@ const Stock = () => {
   const [favourites, setFavourites] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavourite, setIsFavourite] = useState(false);
-  // const [data, setData] = useState(null);
   const { stock } = useParams();
 
   // TEMPORARY TO AVOID TOO MANY API REQUESTS
@@ -32,7 +31,7 @@ const Stock = () => {
           setIsFavourite(favourites.includes(stock));
         }
       } catch (error) {
-        console.message(error);
+        console.log(error);
       } finally {
         setIsLoading(false);
       }
