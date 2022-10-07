@@ -9,15 +9,19 @@ const { getSearchSuggestions } = require("./restHandlers/getSearchSuggestions");
 const { addFavourite } = require("./restHandlers/addFavourite");
 const { removeFavourite } = require("./restHandlers/removeFavourite");
 const { getFavourites } = require("./restHandlers/getFavourites");
+const { updateProfile } = require("./restHandlers/updateProfile");
 
 express()
   .use(morgan("tiny"))
-  .use(express.json())
+  .use(express.json({limit: '50mb'}))
+  .use(express.urlencoded({limit: '50mb', extended: true}))
+  
 
   .get("/api/get-news/", getNews)
   .get("/api/get-stock/:stock", getStock)
   .get("/api/get-search-suggestions/:query", getSearchSuggestions)
   .post("/api/add-favourite/", addFavourite)
+  .post("/api/update-profile/", updateProfile)
   .get("/api/get-favourites/:email", getFavourites)
   .patch("/api/remove-favourite", removeFavourite)
 

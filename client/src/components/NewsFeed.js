@@ -1049,14 +1049,22 @@ const NewsFeed = () => {
         }}
       ></button>
       {data ? <>{data.data[0].attributes.title}</> : <>'loading...'</>} */}
-      {<h2>News🔥</h2>}
 
+      {<h2>News🔥</h2>}
       {data.data?.map((newsObject) => {
         return (
-          <News to="/:news">
-            {<Img src={`${newsObject.attributes.gettyImageUrl}`} />}
-            {newsObject.attributes.title}
-          </News>
+          <NewsDiv>
+            <News>
+              {<Img src={`${newsObject.attributes.gettyImageUrl}`} />}
+              <A
+                href={newsObject.links.canonical}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {newsObject.attributes.title}
+              </A>
+            </News>
+          </NewsDiv>
         );
       })}
     </Wrapper>
@@ -1066,24 +1074,46 @@ const NewsFeed = () => {
 export default NewsFeed;
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 13px;
-
-  border: 1px solid red;
+  padding: 20px;
+  border: 1px solid var(--color-beige);
 `;
 
 // Stock feed section
-const News = styled.div`
-  border: 1px red dashed;
+const NewsDiv = styled.div`
+  border: 2.5px var(--color-purple) solid;
+  border-radius: 10px;
   padding: 20px;
+  margin: 2px;
   cursor: pointer;
-  &:hover {
-    background-color: snow;
-  }
+  background: var(--color-beige);
 `;
 
 const Img = styled.img`
   width: 100px;
   border-radius: 10px;
+`;
+const News = styled.div`
+  border-radius: 10px;
+  white-space: nowrap;
+  padding: 10px 22px;
+  color: #010606;
+  font-size: 16px;
+  transition: all 0.4s ease-in-out;
+  text-decoration: none;
+  &:hover {
+    transition: all 0.4s ease-in-out;
+    background: var(--color-purple);
+    color: var(--color-beige);
+  }
+`;
+const A = styled.a`
+  text-decoration: none;
+  &:focus,
+  &:hover,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+    color: inherit;
+  }
 `;

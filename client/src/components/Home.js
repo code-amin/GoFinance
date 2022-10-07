@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Featured from "./Featured";
 import NewsFeed from "./NewsFeed";
+import Stock from "./Stock";
 
 const Home = () => {
   return (
@@ -13,8 +14,8 @@ const Home = () => {
         </Header>
 
         <FeaturedSection>
-          <Featured></Featured>
-          <ViewFeatured to="/:stock">View stock... →</ViewFeatured>
+          <Featured />
+          <ViewFeatured to="/stock/TSLA">View stock... →</ViewFeatured>
         </FeaturedSection>
       </Wrapper>
       <NewsFeed />
