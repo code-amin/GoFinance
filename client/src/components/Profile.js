@@ -1,6 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 // require("dotenv").config();
 
@@ -10,6 +10,7 @@ const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [fileInputState, setFileInputState] = useState("");
   const [selectedFile, setSelectedFile] = useState("");
+  const [dataIsLoading, setDataIsLoading] = useState(true);
   const [favourites, setFavourites] = useState("");
   const [profilePicture, setProfilePicture] = useState(
     "https://as1.ftcdn.net/v2/jpg/02/18/23/02/1000_F_218230230_OdCO2XyeMsH3ica7Um99uIeMnTFGyibC.jpg"
@@ -31,7 +32,7 @@ const Profile = () => {
   if (isLoading) {
     return <div>Loading ...</div>;
   }
-  
+
   const handleSubmitFile = (event) => {
     event.preventDefault();
     if (!previewSource) return;
@@ -54,16 +55,34 @@ const Profile = () => {
       console.log(error);
     }
   };
-  const fetchFavourite = async () => {
-    if (isAuthenticated) {
-      const { email } = user;
-      const fetchResult = await fetch(`/api/get-favourites/${email}`);
-      const parsedResult = await fetchResult.json();
+  // const fetchFavourite = async () => {
+  //   if (isAuthenticated) {
+  //     const { email } = user;
+  //     const fetchResult = await fetch(`/api/get-favourites/${email}`);
+  //     const parsedResult = await fetchResult.json();
 
-      setFavourites(parsedResult.data);
-    }
-  };
+  //     setFavourites(parsedResult.data);
+  //   }
+  // };
   // console.log(user);
+  if (!favourites) {
+    const fetchFavourite = async () => {
+      try {
+        if (isAuthenticated) {
+          const { email } = user;
+          const fetchResult = await fetch(`/api/get-favourites/${email}`);
+          const parsedResult = await fetchResult.json();
+
+          setFavourites(parsedResult.data ?? []);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setDataIsLoading(false);
+      }
+    };
+    fetchFavourite();
+  }
 
   return (
     isAuthenticated && (
@@ -93,15 +112,19 @@ const Profile = () => {
           <img src={previewSource} alt="chosen" style={{ height: "200px" }} />
         )} */}
         </UserData>
-        <Favourites>
+        <FavouritesDiv>
           {favourites && (
             <>
               {favourites?.map((favourite) => {
-                return <Link1 to={`/stock/${favourite}`}>{favourite}d</Link1>;
+                return (
+                  <Favourites to={`/stock/${favourite}`}>
+                    {favourite}
+                  </Favourites>
+                );
               })}
             </>
           )}
-        </Favourites>
+        </FavouritesDiv>
       </>
     )
   );
@@ -125,7 +148,10 @@ const Img = styled.img`
   height: 100px;
 `;
 
-const Favourites = styled.div`
+const FavouritesDiv = styled.div`
   border: 1px solid red;
+  display: grid;
 `;
-const Link1 = styled(Link)``;
+const Favourites = styled(Link)`
+  padding: 3px;
+`;

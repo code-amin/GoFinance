@@ -52,7 +52,7 @@ const Stock = () => {
         headers: { "Content-Type": "application/json" },
         Accept: "application/json",
       });
-      setFavourites(favourites.filter((s) => s !== stock));
+      setFavourites(favourites.filter((favTicker) => favTicker !== stock));
       console.log(`removed ${stock}`);
     } else {
       fetch("/api/add-favourite/", {
