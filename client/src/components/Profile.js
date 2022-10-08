@@ -1,6 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import styled from "styled-components";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 // require("dotenv").config();
 
 // const { REACT_APP_UPLOAD_PRESET } = process.env;
@@ -9,7 +10,12 @@ const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [fileInputState, setFileInputState] = useState("");
   const [selectedFile, setSelectedFile] = useState("");
+  const [favourites, setFavourites] = useState("");
+  const [profilePicture, setProfilePicture] = useState(
+    "https://as1.ftcdn.net/v2/jpg/02/18/23/02/1000_F_218230230_OdCO2XyeMsH3ica7Um99uIeMnTFGyibC.jpg"
+  );
   const [previewSource, setPreviewSource] = useState("");
+  // console.log(user);
   const handleFileInputChange = (event) => {
     const file = event.target.files[0];
     previewFile(file);
@@ -25,18 +31,25 @@ const Profile = () => {
   if (isLoading) {
     return <div>Loading ...</div>;
   }
+  
   const handleSubmitFile = (event) => {
     event.preventDefault();
     if (!previewSource) return;
     uploadImage(previewSource);
   };
   const uploadImage = async (base64EncodedImage) => {
+    const { email } = user;
+
     try {
-      await fetch("/api/update-profile", {
+      const response = await fetch("/api/update-profile", {
         method: "POST",
-        body: JSON.stringify({ data: base64EncodedImage }),
+        body: JSON.stringify({ data: base64EncodedImage, email: email }),
         headers: { "Content-type": "application/json" },
       });
+      const data = await response.json();
+
+      setProfilePicture(data.profile_url);
+      alert("changes saved");
     } catch (error) {
       console.log(error);
     }
@@ -47,34 +60,49 @@ const Profile = () => {
       const fetchResult = await fetch(`/api/get-favourites/${email}`);
       const parsedResult = await fetchResult.json();
 
-      // console.log(parsedResult);
+      setFavourites(parsedResult.data);
     }
   };
-  fetchFavourite();
   // console.log(user);
 
   return (
     isAuthenticated && (
-      <UserData>
-        <form onSubmit={handleSubmitFile} className="form">
-          Profile Picture: <Img src={user.picture} alt={user.name} />
-          <input
-            type="file"
-            name="image"
-            onChange={handleFileInputChange}
-            value={fileInputState}
-            className="form-input"
-          />
-          <button className="btn" type="submit">
-            Submit
-          </button>
-          <p>Username: {user.name}</p>
-          <p>Email: {user.email}</p>
-        </form>
-        {previewSource && (
+      <>
+        <UserData>
+          <form onSubmit={handleSubmitFile} className="form">
+            <h2>Your profile</h2>
+            {profilePicture && (
+              <>
+                <Img src={profilePicture} />
+              </>
+            )}
+            <input
+              type="file"
+              name="image"
+              onChange={handleFileInputChange}
+              value={fileInputState}
+              className="form-input"
+            />
+            <button className="btn" type="submit">
+              Save
+            </button>
+            <h3>Username:</h3> {user.name}
+            <h3>Email:</h3> {user.email}
+          </form>
+          {/* {previewSource && (
           <img src={previewSource} alt="chosen" style={{ height: "200px" }} />
-        )}
-      </UserData>
+        )} */}
+        </UserData>
+        <Favourites>
+          {favourites && (
+            <>
+              {favourites?.map((favourite) => {
+                return <Link1 to={`/stock/${favourite}`}>{favourite}d</Link1>;
+              })}
+            </>
+          )}
+        </Favourites>
+      </>
     )
   );
 };
@@ -82,9 +110,22 @@ const Profile = () => {
 export default Profile;
 
 const UserData = styled.div`
+  margin: 20px auto;
+  display: block;
+  width: 250px;
   text-align: center;
-  flex-direction: column;
+  border: 1px solid var(--color-beige);
+  border-radius: 10px;
 `;
 const Img = styled.img`
-  border-radius: 100px;
+  border-radius: 50%;
+  margin: 20px auto;
+  display: block;
+  width: 100px;
+  height: 100px;
 `;
+
+const Favourites = styled.div`
+  border: 1px solid red;
+`;
+const Link1 = styled(Link)``;

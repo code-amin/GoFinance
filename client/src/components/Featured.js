@@ -102,19 +102,7 @@ const Featured = () => {
             <div>{"52W High : $" + data.high52}</div>
             <div>{"52W Low : $" + data.low52}</div>
           </div>
-          {/* 
-          <h3>About the company</h3>
-          <div>{" " + data.longDesc}</div>
-          <div>{data.primaryname}</div>
-
-          <div>
-            {"Located in: " +
-              data.city +
-              ", " +
-              data.state +
-              ", " +
-              data.country}
-          </div> */}
+      
         </>
       )}
     </Wrapper>
