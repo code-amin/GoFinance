@@ -2,12 +2,13 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-
+import { HiStar, HiOutlineStar } from "react-icons/hi";
 const Stock = () => {
   const { user, isAuthenticated } = useAuth0();
   const [favourites, setFavourites] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavourite, setIsFavourite] = useState(false);
+
   const { stock } = useParams();
 
   // TEMPORARY TO AVOID TOO MANY API REQUESTS
@@ -26,7 +27,6 @@ const Stock = () => {
           const { email } = user;
           const fetchResult = await fetch(`/api/get-favourites/${email}`);
           const parsedResult = await fetchResult.json();
-
           setFavourites(parsedResult.data ?? []);
           setIsFavourite(favourites.includes(stock));
         }
@@ -134,25 +134,21 @@ const Stock = () => {
   return (
     <Wrapper>
       {favourites && (
-        <>
+        <ToggleFavourite>
           {isFavourite ? (
-            <ToggleFavourite
+            <HiStar
               onClick={() => {
                 handleFavourites();
               }}
-            >
-              ➖ remove from favourites
-            </ToggleFavourite>
+            />
           ) : (
-            <ToggleFavourite
+            <HiOutlineStar
               onClick={() => {
                 handleFavourites();
               }}
-            >
-              ➕ add to favourites
-            </ToggleFavourite>
+            />
           )}
-        </>
+        </ToggleFavourite>
       )}
       {data && (
         <>
@@ -205,9 +201,10 @@ const Wrapper = styled.div`
   max-width: 500px;
 `;
 
-const ToggleFavourite = styled.button`
-  font-size: 15px;
-  border: 1px solid black;
-  border-radius: 10px;
-  background-color: var(--color-beige);
+const ToggleFavourite = styled.div`
+  font-size: 35px;
+  color: #966fd6;
+  margin: 5px 5px 10px 2px;
+  position: absolute;
+  right: 0;
 `;

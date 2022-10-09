@@ -26,14 +26,14 @@ const SearchBar = () => {
             setQuery(e.target.value);
           }}
         />
-        <button onClick={handleSubmit}>GO</button>
+        <GoButton onClick={handleSubmit}>GO</GoButton>
       </div>
       <>
         {result && (
           <>
             <Ul>
               {result.map((suggestion) => {
-                return <Suggestion data={suggestion} setResult={setResult} />;
+                return <Suggestion data={suggestion} setResult={setResult}/>;
               })}
             </Ul>
           </>
@@ -46,19 +46,21 @@ const SearchBar = () => {
 export default SearchBar;
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: inline-block;
+  left:150px;
+  /* flex-direction: column; */
+  position:absolute;
   min-height: 50px;
   max-height: 50px;
-  flex-direction: column;
 `;
 
 const Search = styled.input`
   background-color: #f2f2f2;
   border-radius: 5px;
   max-height: 50px;
-  min-width: 200px;
-  border: 0.1px solid #181818;
+  height:30px;
+  min-width: 350px;
+  border: 0.1px solid transparent;
   margin: 10px;
 `;
 const Ul = styled.ul`
@@ -66,6 +68,7 @@ const Ul = styled.ul`
   color: gray;
   cursor: pointer;
   z-index: 1000;
+  position:relative;
 `;
 const Li = styled.li`
   color: black;
@@ -78,3 +81,11 @@ const Li = styled.li`
     color: black;
   }
 `;
+
+const GoButton = styled.button`
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  height:30px;
+  border: 1px solid transparent;
+  margin: 10px 0px 0px 2px;
+`

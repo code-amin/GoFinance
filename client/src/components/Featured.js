@@ -83,27 +83,27 @@ const Featured = () => {
     <Wrapper>
       <button onClick={()=>{handleClick()}}>fetch stock data</button>
       {data && (
-        <>
-          <h1>{data.companyName}</h1>
-          <h2>
+        <Details>
+           <h1> {"$" + data.lastDaily.last}</h1>
+          <Details>{data.companyName}</Details>
+          <Details>
             {/* {"$" + data.id.toUpperCase()} */}
             {"$TSLA"}
-            {" @ $" + data.lastDaily.last}
-          </h2>
+          </Details>
 
-          <div>
-            <h3>Technicals</h3>
-            <div>{"MCap : $" + data.marketCap / 1000000000 + "(B)"}</div>
-            <div>
+          <Details>
+            <Technicals>Market stats</Technicals>
+            <Details>{"MCap : $" + data.marketCap / 1000000000 + "(B)"}</Details>
+            <Details>
               {"Volume : $" + data.lastDaily.volume}
               {/* {`${data.lastDaily.volumeAt}`} */}
-            </div>
-            <div>{"EPS : $" + data.eps}</div>
-            <div>{"52W High : $" + data.high52}</div>
-            <div>{"52W Low : $" + data.low52}</div>
-          </div>
+            </Details>
+            <Details>{"EPS : $" + data.eps}</Details>
+            <Details>{"52W High : $" + data.high52}</Details>
+            <Details>{"52W Low : $" + data.low52}</Details>
+          </Details>
       
-        </>
+        </Details>
       )}
     </Wrapper>
   );
@@ -116,7 +116,30 @@ const Wrapper = styled.div`
   flex-direction: column;
   padding: 13px;
   min-height: 400px;
-  border: 1px solid red;
+  border: 1px solid black;
+  border-radius:13px;
   position: relative;
-  max-width: 200px;
+  min-width: 300px;
+  position: relative;
+	width: 300px;
+	height: 400px;
+	background: var(--color-black);
+	margin: 20px;
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+	border-radius: 15px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	backdrop-filter: blur(10px);
+  color:white;
 `;
+
+const Details = styled.div`
+  padding:3px 0 3px 0;
+  font-size:18px;
+  
+`
+const Technicals = styled.div`
+  padding:3px 0 3px 0;
+  color:var(--color-blue);
+`

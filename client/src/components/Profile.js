@@ -16,7 +16,6 @@ const Profile = () => {
     "https://as1.ftcdn.net/v2/jpg/02/18/23/02/1000_F_218230230_OdCO2XyeMsH3ica7Um99uIeMnTFGyibC.jpg"
   );
   const [previewSource, setPreviewSource] = useState("");
-  // console.log(user);
   const handleFileInputChange = (event) => {
     const file = event.target.files[0];
     previewFile(file);
@@ -86,7 +85,7 @@ const Profile = () => {
 
   return (
     isAuthenticated && (
-      <>
+      <Wrapper>
         <UserData>
           <form onSubmit={handleSubmitFile} className="form">
             <h2>Your profile</h2>
@@ -125,13 +124,16 @@ const Profile = () => {
             </>
           )}
         </FavouritesDiv>
-      </>
+      </Wrapper>
     )
   );
 };
 
 export default Profile;
 
+const Wrapper = styled.div`
+  
+`
 const UserData = styled.div`
   margin: 20px auto;
   display: block;

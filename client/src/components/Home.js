@@ -9,11 +9,11 @@ const Home = () => {
     <>
       <Wrapper>
         <Header>
-          {" "}
-          Your <Underline>favorite stocks</Underline> at any time 🚀
+          Your <Underline>favorite stocks</Underline> at any time.
         </Header>
 
         <FeaturedSection>
+ 
           <Featured />
           <ViewFeatured to="/stock/TSLA">View stock... →</ViewFeatured>
         </FeaturedSection>
@@ -34,16 +34,14 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.h1`
-  color: black;
+  color: var(--color-blue);
   font-size: 50px;
-  padding: 140px 0px 20px 20px;
+  padding: 80px 0px 0px 20px;
   width: 50%;
-  display: grid;
   justify-content: center;
 `;
 
 const Underline = styled.p`
-  text-decoration: underline;
   color: var(--color-purple);
 `;
 

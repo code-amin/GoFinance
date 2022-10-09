@@ -1050,21 +1050,22 @@ const NewsFeed = () => {
       ></button>
       {data ? <>{data.data[0].attributes.title}</> : <>'loading...'</>} */}
 
-      {<h2>News🔥</h2>}
+      {<Header>Headlines</Header>}
       {data.data?.map((newsObject) => {
         return (
-          <NewsDiv>
-            <News>
+          <NewsSection>
+            <NewsCard>
               {<Img src={`${newsObject.attributes.gettyImageUrl}`} />}
-              <A
+              <Anchor
                 href={newsObject.links.canonical}
                 target="_blank"
                 rel="noreferrer"
               >
-                {newsObject.attributes.title}
-              </A>
-            </News>
-          </NewsDiv>
+                {newsObject.attributes.title} 
+                <ReadMore>READ MORE</ReadMore>
+              </Anchor>
+            </NewsCard>
+          </NewsSection>
         );
       })}
     </Wrapper>
@@ -1072,44 +1073,57 @@ const NewsFeed = () => {
 };
 
 export default NewsFeed;
-
+const Header = styled.h2`
+  color: var(--color-blue);
+  font-size: 35px;
+  padding: 10px 0px 0px 10px;
+  width: 50%;
+`;
 const Wrapper = styled.div`
   padding: 20px;
   border: 1px solid var(--color-beige);
 `;
 
 // Stock feed section
-const NewsDiv = styled.div`
+const NewsSection = styled.div`
+  
   border: 2.5px var(--color-purple) solid;
   border-radius: 10px;
   padding: 20px;
   margin: 2px;
   cursor: pointer;
-  background: var(--color-beige);
+  transition: all 0.6s ease-in-out;
+  text-decoration: none;
+  
+  &:hover {
+    transition: all 0.6s ease-in-out;
+    background-color:#966fd6;
+    color: var(--color-beige);
+  }
 `;
 
 const Img = styled.img`
   width: 100px;
   border-radius: 10px;
+  float:left;
+  margin-right:10px;
 `;
-const News = styled.div`
+const NewsCard = styled.div`
+  
   border-radius: 10px;
-  white-space: nowrap;
+  white-space: wrap;
   padding: 10px 22px;
   color: #010606;
-  font-size: 16px;
-  transition: all 0.4s ease-in-out;
-  text-decoration: none;
+  font-size: 22px;
+  min-height:100px;
   &:hover {
-    transition: all 0.4s ease-in-out;
-    background: var(--color-purple);
+    transition: all 0.6s ease-in-out;
     color: var(--color-beige);
   }
 `;
-const A = styled.a`
-  text-decoration: none;
+const Anchor = styled.a`
+
   &:focus,
-  &:hover,
   &:visited,
   &:link,
   &:active {
@@ -1117,3 +1131,8 @@ const A = styled.a`
     color: inherit;
   }
 `;
+const ReadMore = styled.div`
+  color:var(--color-blue);
+  font-size:15px;
+  padding-top:26px;
+`

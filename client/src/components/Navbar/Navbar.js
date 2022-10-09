@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import SearchBar from "./SearchBar";
 import Login from "../Login";
-import Profile from "../Profile";
 import Logout from "../Logout";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import { BsPersonCircle } from "react-icons/bs";
-
+import { IoPersonOutline } from "react-icons/io5";
+import { useState } from "react";
+import Menu from "./Menu";
 const Navbar = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
@@ -19,7 +19,7 @@ const Navbar = () => {
         {isAuthenticated ? (
           <>
             <ProfileIconSection to="/Profile">
-              <BsPersonCircle />
+              <IoPersonOutline />
             </ProfileIconSection>
             <Logout to="/" />
           </>
@@ -38,19 +38,20 @@ const Wrapper = styled.div`
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-between;
-  background-color: #8758ff;
+  background-color:var( --color-purple);
   color: #8758ff;
   padding: 3px;
+  
 `;
 
 const Logo = styled(Link)`
   margin: 10px;
   font-weight: bold;
   color: white;
-  border: 2px solid var(--color-beige);
   border-radius: 6px;
   padding: 6px;
   text-decoration: none;
+  font-size: 20px;
 `;
 
 const LoginSection = styled.div`
@@ -69,7 +70,4 @@ const ProfileIconSection = styled(Link)`
   font-size: 30px;
   position: relative;
   top: 7px;
-`;
-const ProfileIcon = styled.img`
-  border: 1px red solid;
 `;

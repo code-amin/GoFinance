@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const Suggestion = ({ data, setResult }) => {
   // console.log(data);
-  const { name, content } = data;
+  const { name, content, currency } = data;
   const navigate = useNavigate();
 
   const handleClick = (event) => {
@@ -16,7 +16,8 @@ const Suggestion = ({ data, setResult }) => {
   return (
     <Wrapper onClick={handleClick}>
       <Name>{name}</Name>
-      <Content>{content}</Content>
+      <Content>{content.substring(0,25)+'... '} </Content>
+      <Currency> ({currency})</Currency>
     </Wrapper>
   );
 };
@@ -39,5 +40,8 @@ const Name = styled.span`
 const Content = styled.span`
   margin-left: 5px;
 `;
-
+const Currency = styled.span`
+  justify-content: flex-end;
+  color:black;
+`
 export default Suggestion;
