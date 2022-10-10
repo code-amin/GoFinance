@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 const NewsFeed = () => {
   // const [data, setData] = useState(null);
-  // const { stock } = useParams();
 
   // HARDCODED API DATA TO AVOID BUSTING REQUEST LIMIT
   // useEffect(() => {
@@ -16,6 +15,7 @@ const NewsFeed = () => {
   //       setData(data);
   //     });
   // };
+  
   // }, []);
 
   // HARDCODED API DATA TO AVOID BUSTING REQUEST LIMIT
@@ -1043,6 +1043,7 @@ const NewsFeed = () => {
 
   return (
     <Wrapper>
+      
       {/* <button
         onClick={() => {
           handleNews();
@@ -1134,5 +1135,5 @@ const Anchor = styled.a`
 const ReadMore = styled.div`
   color:var(--color-blue);
   font-size:15px;
-  padding-top:26px;
+  padding-top:2px;
 `

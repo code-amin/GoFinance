@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { HiStar, HiOutlineStar } from "react-icons/hi";
@@ -8,7 +8,7 @@ const Stock = () => {
   const [favourites, setFavourites] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavourite, setIsFavourite] = useState(false);
-
+  const [ colour, setColour] = useState('')
   const { stock } = useParams();
 
   // TEMPORARY TO AVOID TOO MANY API REQUESTS
@@ -125,7 +125,8 @@ const Stock = () => {
     dilutedEpsExclExtraItems: null,
     high52: 699.54,
     low52: 274.77,
-  };
+};
+
 
   if (isLoading) {
     return <>Loading...</>;
@@ -153,16 +154,18 @@ const Stock = () => {
       {data && (
         <>
           <h1>{data.companyName}</h1>
-          <h2>
+          <Price >
             {"$" + stock.toUpperCase()}
-            {" @ $" + data.lastDaily.last}
-          </h2>
+            {"  $" + data.lastDaily.last}
+          </Price>
+              {/* {(((data.lastDaily.last/data.lastDaily.open)-1)*100).toFixed(2)>0 ? setColour('green'): setColour('red')} */}
 
           <div>
             <h3>Technicals</h3>
             <div>{"MCap : $" + data.marketCap / 1000000000 + "(B)"}</div>
             <div>
               {"Volume : $" + data.lastDaily.volume}
+
               {/* {`${data.lastDaily.volumeAt}`} */}
             </div>
             <div>{"EPS : $" + data.eps}</div>
@@ -208,3 +211,9 @@ const ToggleFavourite = styled.div`
   position: absolute;
   right: 0;
 `;
+
+const Price = styled.div`
+    font-size:30px;
+    font-weight:bold;
+`
+

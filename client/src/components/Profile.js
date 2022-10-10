@@ -2,6 +2,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { HiStar } from "react-icons/hi";
+
 // require("dotenv").config();
 
 // const { REACT_APP_UPLOAD_PRESET } = process.env;
@@ -13,7 +15,7 @@ const Profile = () => {
   const [dataIsLoading, setDataIsLoading] = useState(true);
   const [favourites, setFavourites] = useState("");
   const [profilePicture, setProfilePicture] = useState(
-    "https://as1.ftcdn.net/v2/jpg/02/18/23/02/1000_F_218230230_OdCO2XyeMsH3ica7Um99uIeMnTFGyibC.jpg"
+    "https://www.pngfind.com/pngs/m/53-532960_null-profile-icon-png-white-transparent-png.png"
   );
   const [previewSource, setPreviewSource] = useState("");
   const handleFileInputChange = (event) => {
@@ -101,11 +103,16 @@ const Profile = () => {
               value={fileInputState}
               className="form-input"
             />
+
             <button className="btn" type="submit">
               Save
             </button>
-            <h3>Username:</h3> {user.name}
-            <h3>Email:</h3> {user.email}
+            <Username>
+              Username: <Content>{user.name}</Content>
+            </Username>
+            <Username>
+              Email: <Content>{user.email}</Content>
+            </Username>
           </form>
           {/* {previewSource && (
           <img src={previewSource} alt="chosen" style={{ height: "200px" }} />
@@ -114,6 +121,8 @@ const Profile = () => {
         <FavouritesDiv>
           {favourites && (
             <>
+              <FavHeader>Favourites</FavHeader>
+              <HiStar />
               {favourites?.map((favourite) => {
                 return (
                   <Favourites to={`/stock/${favourite}`}>
@@ -132,15 +141,7 @@ const Profile = () => {
 export default Profile;
 
 const Wrapper = styled.div`
-  
-`
-const UserData = styled.div`
-  margin: 20px auto;
-  display: block;
-  width: 250px;
-  text-align: center;
-  border: 1px solid var(--color-beige);
-  border-radius: 10px;
+  display: flex;
 `;
 const Img = styled.img`
   border-radius: 50%;
@@ -149,11 +150,34 @@ const Img = styled.img`
   width: 100px;
   height: 100px;
 `;
+const UserData = styled.div`
+  margin: 20px auto;
+  display: flex;
+  width: 500px;
+  text-align: center;
+  border: 1px solid var(--color-beige);
+  border-radius: 10px;
+`;
+
+const Username = styled.div`
+  display: flex;
+  font-weight: bold;
+  padding: 7px;
+`;
 
 const FavouritesDiv = styled.div`
-  border: 1px solid red;
-  display: grid;
+  display: flex;
+  color: var(--color-blue);
 `;
 const Favourites = styled(Link)`
-  padding: 3px;
+  font-size: 16px;
+`;
+const FavHeader = styled.div`
+  font-size: 25px;
+  display: flex;
+`;
+
+const Content = styled.div`
+  font-weight: normal;
+  padding-left: 6px;
 `;
