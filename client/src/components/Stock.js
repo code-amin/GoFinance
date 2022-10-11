@@ -146,7 +146,7 @@ const Stock = () => {
               {"Volume : $" +
                 data.volume.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </div>
-            <div>{"Open : $" + data.open}</div>
+            <div>{"Previous close : $" + data.prev_close}</div>
             <div>{"52-Week High : $" + data.lua.high_52w.toFixed(2)}</div>
             <div>{"52-Week Low : $" + data.lua.low_52w.toFixed(2)}</div>
           </div>
