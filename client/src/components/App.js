@@ -6,22 +6,33 @@ import Navbar from "./Navbar/Navbar";
 import Profile from "./Profile";
 import Stock from "./Stock";
 import Footer from "./Footer";
+import Favourites from "./Favourites";
+import styled from "styled-components";
 
 const App = () => {
   return (
     <Router>
       <GlobalStyles />
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/favorites" element={<></>} />
-
-        <Route path="/stock/:stock" element={<Stock />} />
-      </Routes>
+      <AppWrapper>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/favourites" element={<Favourites />} />
+          <Route path="/stock/:stock" element={<Stock />} />
+        </Routes>
+      </AppWrapper>
       <Footer />
     </Router>
   );
 };
+
+const AppWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: tomato; */
+  min-height: calc(100vh - 120px);
+`;
 
 export default App;

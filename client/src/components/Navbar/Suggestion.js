@@ -26,9 +26,14 @@ const Wrapper = styled.div`
   background-color: white;
   width: 100%;
   cursor: pointer;
+  padding:4px;
   &:hover {
-    background-color: lightgrey;
+
+    border-radius: 3%;
+    background-color: lavender;
+    color: black;
   }
+  
 `;
 
 const Name = styled.span`

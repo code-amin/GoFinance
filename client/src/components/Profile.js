@@ -11,12 +11,7 @@ import { HiStar } from "react-icons/hi";
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [fileInputState, setFileInputState] = useState("");
-  const [selectedFile, setSelectedFile] = useState("");
-  const [dataIsLoading, setDataIsLoading] = useState(true);
-  const [favourites, setFavourites] = useState("");
-  const [profilePicture, setProfilePicture] = useState(
-    "https://www.pngfind.com/pngs/m/53-532960_null-profile-icon-png-white-transparent-png.png"
-  );
+  const [profilePicture, setProfilePicture] = useState(user.picture);
   const [previewSource, setPreviewSource] = useState("");
   const handleFileInputChange = (event) => {
     const file = event.target.files[0];
@@ -29,7 +24,7 @@ const Profile = () => {
       setPreviewSource(reader.result);
     };
   };
-
+  console.log(user);
   if (isLoading) {
     return <div>Loading ...</div>;
   }
@@ -56,34 +51,6 @@ const Profile = () => {
       console.log(error);
     }
   };
-  // const fetchFavourite = async () => {
-  //   if (isAuthenticated) {
-  //     const { email } = user;
-  //     const fetchResult = await fetch(`/api/get-favourites/${email}`);
-  //     const parsedResult = await fetchResult.json();
-
-  //     setFavourites(parsedResult.data);
-  //   }
-  // };
-  // console.log(user);
-  if (!favourites) {
-    const fetchFavourite = async () => {
-      try {
-        if (isAuthenticated) {
-          const { email } = user;
-          const fetchResult = await fetch(`/api/get-favourites/${email}`);
-          const parsedResult = await fetchResult.json();
-
-          setFavourites(parsedResult.data ?? []);
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setDataIsLoading(false);
-      }
-    };
-    fetchFavourite();
-  }
 
   return (
     isAuthenticated && (
@@ -114,31 +81,18 @@ const Profile = () => {
               Email: <Content>{user.email}</Content>
             </Username>
           </form>
-          {/* {previewSource && (
-          <img src={previewSource} alt="chosen" style={{ height: "200px" }} />
-        )} */}
         </UserData>
-        <FavouritesDiv>
-          {favourites && (
-            <>
-              <FavHeader>Favourites</FavHeader>
-              <HiStar />
-              {favourites?.map((favourite) => {
-                return (
-                  <Favourites to={`/stock/${favourite}`}>
-                    {favourite}
-                  </Favourites>
-                );
-              })}
-            </>
-          )}
-        </FavouritesDiv>
       </Wrapper>
     )
   );
 };
 
 export default Profile;
+
+const FavouriteContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -157,6 +111,8 @@ const UserData = styled.div`
   text-align: center;
   border: 1px solid var(--color-beige);
   border-radius: 10px;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Username = styled.div`
@@ -171,10 +127,10 @@ const FavouritesDiv = styled.div`
 `;
 const Favourites = styled(Link)`
   font-size: 16px;
+  display: grid;
 `;
 const FavHeader = styled.div`
   font-size: 25px;
-  display: flex;
 `;
 
 const Content = styled.div`

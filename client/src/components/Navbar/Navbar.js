@@ -5,19 +5,30 @@ import Logout from "../Logout";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { IoPersonOutline } from "react-icons/io5";
-import { useState } from "react";
+import { BsBookmark } from "react-icons/bs";
+
+import { useEffect, useState } from "react";
 import Menu from "./Menu";
 const Navbar = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
+
+  // console.log(user.picture);
+  useEffect(() => {
+    //fetch to update user with profile image
+    fetch("/api/update-profile");
+  });
 
   return (
     <Wrapper>
       <Logo to="/">GoFinance</Logo>
       <SearchBar />
-
+      
       <LoginSection>
         {isAuthenticated ? (
           <>
+            <FavouritesIcon to='favourites'>
+              <BsBookmark/>
+            </FavouritesIcon>
             <ProfileIconSection to="/Profile">
               <IoPersonOutline />
             </ProfileIconSection>
@@ -38,10 +49,9 @@ const Wrapper = styled.div`
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-between;
-  background-color:var( --color-purple);
+  background-color: var(--color-purple);
   color: #8758ff;
   padding: 3px;
-  
 `;
 
 const Logo = styled(Link)`
@@ -66,6 +76,12 @@ const LoginSection = styled.div`
 `;
 
 const ProfileIconSection = styled(Link)`
+  color: white;
+  font-size: 30px;
+  position: relative;
+  top: 7px;
+`;
+const FavouritesIcon = styled(Link)`
   color: white;
   font-size: 30px;
   position: relative;

@@ -4,7 +4,7 @@ const { REACT_APP_API_KEY } = process.env;
 
 const getNews = async (req, res) => {
   console.log("getNews api triggered");
-  const url = 'https://seeking-alpha.p.rapidapi.com/news/v2/list?category=market-news%3A%3Aall&until=0&since=0&size=10&number=1';
+  const url = 'https://seeking-alpha.p.rapidapi.com/news/v2/list?category=market-news%3A%3Aall&until=0&since=0&size=20&number=1';
   
   const options = {
     method: 'GET',
@@ -16,12 +16,12 @@ const getNews = async (req, res) => {
   
   fetch(url, options)
     .then(res => res.json())
-    .then(json => console.log(json))
+    // .then(json => console.log(json))
     .catch(err => console.error('error:' + err));
   const response = await fetch(url, options);
 
   const parsedResponse = await response.json();
-  console.log(parsedResponse);
+  // console.log(parsedResponse);
 
   response
     ? res.status(200).json({ status: 200, data: parsedResponse.data })

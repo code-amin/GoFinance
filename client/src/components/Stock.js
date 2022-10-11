@@ -8,18 +8,29 @@ const Stock = () => {
   const [favourites, setFavourites] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavourite, setIsFavourite] = useState(false);
-  const [ colour, setColour] = useState('')
+  const [colour, setColour] = useState("");
   const { stock } = useParams();
-
+  const [data, setData] = useState("");
+  const [metaData, setMetaData] = useState("");
   // TEMPORARY TO AVOID TOO MANY API REQUESTS
-  // useEffect(() => {
-  //   fetch(`/api/get-stock/${stock}`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //       setData(data.data[0].attributes);
-  //     });
-  // }, []);
+  useEffect(() => {
+    setIsLoading(true);
+    fetch(`/api/get-stock-id/${stock}`)
+      .then((res) => res.json())
+      .then((mdata) => {
+        console.log(mdata);
+        setMetaData(mdata);
+        console.log(mdata.data.data.id);
+        fetch(`/api/get-price/${mdata.data.data.id}`)
+          .then((res) => res.json())
+          .then((datax) => {
+            console.log(datax);
+            setData(datax.data.real_time_quotes[0]);
+            setIsLoading(false);
+          });
+      });
+  }, [stock]);
+
   useEffect(() => {
     const fetchFavourite = async () => {
       try {
@@ -28,7 +39,9 @@ const Stock = () => {
           const fetchResult = await fetch(`/api/get-favourites/${email}`);
           const parsedResult = await fetchResult.json();
           setFavourites(parsedResult.data ?? []);
-          setIsFavourite(favourites.includes(stock));
+          setIsFavourite(parsedResult.data.includes(stock));
+          console.log(favourites.includes(stock));
+          console.log({ favourites });
         }
       } catch (error) {
         console.log(error);
@@ -37,7 +50,7 @@ const Stock = () => {
       }
     };
     fetchFavourite();
-  }, [stock]);
+  }, [isAuthenticated]);
 
   const handleFavourites = () => {
     const { email } = user;
@@ -68,112 +81,70 @@ const Stock = () => {
       console.log(`added ${stock}`);
     }
   };
-  // TEMPORARY TO AVOID TOO MANY API REQUESTS
-  const data = {
-    longDesc:
-      "Adobe Inc. operates as a diversified software company worldwide. It operates through three segments: Digital Media, Digital Experience, and Publishing and Advertising. The Digital Media segment offers produequipment manufacturers. The company was formerly known as Adobe Systems Incorporated and changed its name to Adobe Inc. in October 2018. Adobe Inc. was founded in 1982 and is headquartered in San Jose, California.",
-    sectorname: "Information Technology",
-    sectorgics: 45,
-    primaryname: "Application Software",
-    primarygics: 45103010,
-    numberOfEmployees: 25988,
-    yearfounded: 1982,
-    streetaddress: "345 Park Avenue",
-    streetaddress2: null,
-    streetaddress3: null,
-    streetaddress4: null,
-    city: "San Jose",
-    state: "CA",
-    zipcode: "95110-2704",
-    country: "United States",
-    officephonevalue: "408 536 6000",
-    webpage: "www.adobe.com",
-    companyName: "Adobe Inc.",
-    marketCap: 129358425000,
-    totalEnterprise: 128235425000,
-    totAnalystsRecommendations: 33,
-    fy1UpRevisions: 24,
-    fy1DownRevisions: 4,
-    divYield: null,
-    eps: 10.191096,
-    lastDaily: {
-      rtTime: "2022-09-30T15:59:59.903-04:00",
-      rtSource: "RealTimeQuote",
-      last: 275.2,
-      open: 279.69,
-      close: 275.2,
-      low: 274.85,
-      high: 284.29,
-      volume: 4578776,
-      volumeAt: "2022-09-30T15:59:59.903-04:00",
-      at: "2022-10-01T02:41:03.786-04:00",
-    },
-    estimateEps: 13.62131,
-    debtEq: 32.2897,
-    totDebtCap: 24.4083,
-    ltDebtEquity: 28.1987,
-    ltDebtCap: 21.3158,
-    totLiabTotAssets: 46.2571,
-    impliedMarketCap: null,
-    shortIntPctFloat: 0.9973,
-    divTimeFrame: "historic",
-    divRate: null,
-    peRatioFwd: 20.203636801453,
-    lastClosePriceEarningsRatio: 27.4387312606778,
-    estimateFfo: null,
-    ffoPerShareDiluted: null,
-    dilutedEpsExclExtraItems: null,
-    high52: 699.54,
-    low52: 274.77,
-};
-
 
   if (isLoading) {
-    return <>Loading...</>;
+    return <>Retrieving data...</>;
   }
+  const percentage = (data.last / data.prev_close - 1) * 100;
 
   return (
     <Wrapper>
-      {favourites && (
-        <ToggleFavourite>
-          {isFavourite ? (
-            <HiStar
-              onClick={() => {
-                handleFavourites();
-              }}
-            />
-          ) : (
-            <HiOutlineStar
-              onClick={() => {
-                handleFavourites();
-              }}
-            />
-          )}
-        </ToggleFavourite>
-      )}
       {data && (
         <>
-          <h1>{data.companyName}</h1>
-          <Price >
-            {"$" + stock.toUpperCase()}
-            {"  $" + data.lastDaily.last}
+          {favourites && (
+            <ToggleFavourite>
+              {isFavourite ? (
+                <HiStar
+                  onClick={() => {
+                    handleFavourites();
+                  }}
+                />
+              ) : (
+                <HiOutlineStar
+                  onClick={() => {
+                    handleFavourites();
+                  }}
+                />
+              )}
+            </ToggleFavourite>
+          )}
+          {
+            <Img
+              src={`${
+                metaData.data.data.meta.companyLogoUrl
+                  ? metaData.data.data.meta.companyLogoUrl
+                  : "https://images.pexels.com/photos/210607/pexels-photo-210607.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              }`}
+            />
+          }
+          <h1>{data.lua.company}</h1>
+          <Price>
+            {" $" + data.sa_slug.toUpperCase()}
+            {" $" + data.last}
+            {(data.last / data.prev_close - 1) * 100 > 0
+              ? ` (⬆${percentage.toFixed(2)}%)`
+              : ` (⬇${percentage.toFixed(2)}%)`}
           </Price>
-              {/* {(((data.lastDaily.last/data.lastDaily.open)-1)*100).toFixed(2)>0 ? setColour('green'): setColour('red')} */}
 
           <div>
+            {metaData.data.data.attributes.tradingViewSlug}
             <h3>Technicals</h3>
-            <div>{"MCap : $" + data.marketCap / 1000000000 + "(B)"}</div>
             <div>
-              {"Volume : $" + data.lastDaily.volume}
+              {"Market Cap : $" +
+                (data.market_cap / 1000000000).toFixed(2) +
+                "(B)"}
+            </div>
+            <div>
+              {"Volume : $" + data.volume}
 
               {/* {`${data.lastDaily.volumeAt}`} */}
             </div>
-            <div>{"EPS : $" + data.eps}</div>
-            <div>{"52W High : $" + data.high52}</div>
-            <div>{"52W Low : $" + data.low52}</div>
+            <div>{"Open : $" + data.open}</div>
+            <div>{"52-Week High : $" + data.lua.high_52w}</div>
+            <div>{"52-Week Low : $" + data.lua.low_52w}</div>
           </div>
 
-          <h3>About the company</h3>
+          {/* <h3>About the company</h3>
           <div>{" " + data.longDesc}</div>
           <div>{data.primaryname}</div>
 
@@ -184,7 +155,7 @@ const Stock = () => {
               data.state +
               ", " +
               data.country}
-          </div>
+          </div> */}
         </>
       )}
     </Wrapper>
@@ -198,22 +169,31 @@ const Wrapper = styled.div`
   flex-direction: column;
   padding: 13px;
   min-height: 50px;
-  border: 1px solid red;
   position: relative;
-  left: 25vw;
   max-width: 500px;
+  height: calc(100vh - 120px);
 `;
 
 const ToggleFavourite = styled.div`
   font-size: 35px;
+  max-width: 35px;
   color: #966fd6;
   margin: 5px 5px 10px 2px;
-  position: absolute;
-  right: 0;
+  /* position: absolute; */
+  left: 0;
 `;
 
 const Price = styled.div`
-    font-size:30px;
-    font-weight:bold;
-`
+  font-size: 30px;
+  font-weight: bold;
+`;
 
+const Img = styled.img`
+  width: 50px;
+  position:absolute;
+  right:0;
+  float: right;
+  margin-right: 10px;
+  object-fit: contain;
+  overflow: hidden;
+`;

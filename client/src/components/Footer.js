@@ -14,17 +14,19 @@ const Footer = () => {
 };
 
 const Wrapper = styled.div`
+  bottom: 0;
+  position: relative;
   width: 100%;
-  display:flex;
-  padding-top:100px;
+  display: flex;
+  height: 70px;
 `;
 
 const Text = styled.div`
   bottom: 0;
   width: 100%;
   height: 70px;
-  background-color: #9370DB;
-  color: #FFFFFF;
+  background-color: #9370db;
+  color: #ffffff;
   font-size: 14px;
   padding: 20px;
 `;

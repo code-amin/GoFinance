@@ -11,7 +11,7 @@ const SearchBar = () => {
     fetch(`/api/get-search-suggestions/${query}`)
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data.data);
+        console.log(data.data);
         setResult(data.data);
       });
   };
@@ -33,7 +33,7 @@ const SearchBar = () => {
           <>
             <Ul>
               {result.map((suggestion) => {
-                return <Suggestion data={suggestion} setResult={setResult}/>;
+                return <Suggestion data={suggestion} setResult={setResult} />;
               })}
             </Ul>
           </>
@@ -47,9 +47,9 @@ export default SearchBar;
 
 const Wrapper = styled.div`
   display: inline-block;
-  left:150px;
+  left: 150px;
   /* flex-direction: column; */
-  position:absolute;
+  position: absolute;
   min-height: 50px;
   max-height: 50px;
 `;
@@ -58,7 +58,7 @@ const Search = styled.input`
   background-color: #f2f2f2;
   border-radius: 5px;
   max-height: 50px;
-  height:30px;
+  height: 30px;
   min-width: 350px;
   border: 0.1px solid transparent;
   margin: 10px;
@@ -68,24 +68,13 @@ const Ul = styled.ul`
   color: gray;
   cursor: pointer;
   z-index: 1000;
-  position:relative;
-`;
-const Li = styled.li`
-  color: black;
-  flex-direction: column;
-  margin: 13px;
-  font-size: 17px;
-  &:hover {
-    border-radius: 3%;
-    background-color: lavender;
-    color: black;
-  }
+  position: relative;
 `;
 
 const GoButton = styled.button`
   background-color: #f2f2f2;
   border-radius: 5px;
-  height:30px;
+  height: 30px;
   border: 1px solid transparent;
   margin: 10px 0px 0px 2px;
-`
+`;
