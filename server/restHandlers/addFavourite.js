@@ -8,11 +8,12 @@ const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
-const addFavourite = async (req, res) => {
-  console.log("addFavourite  api triggered");
-  const { email, ticker } = req.body;
 
+// ADD TICKER TO FAVOURITES ARRAY IN MONGO UNDER THAT USER
+const addFavourite = async (req, res) => {
+  const { email, ticker } = req.body;
   const client = new MongoClient(REACT_APP_MONGO_URI);
+  
   try {
     await client.connect();
     const db = client.db("db-name");

@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Featured from "./Featured";
 import NewsFeed from "./NewsFeed";
-import Stock from "./Stock";
 
 const Home = () => {
   return (

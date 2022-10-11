@@ -14,6 +14,7 @@ export default createGlobalStyle`
 }
 
   :root {
+    // MAIN COLOUR PALETTE
     --color-beige: #F2F2F2;
     --color-black: #181818;
     --color-purple: #8758FF;
@@ -25,11 +26,6 @@ export default createGlobalStyle`
   html, body {
     max-width: 100vw;
   }
-
-  /* http://meyerweb.com/eric/tools/css/reset/
-    v2.0 | 20110126
-    License: none (public domain)
-  */
 
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,

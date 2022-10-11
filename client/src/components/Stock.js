@@ -3,34 +3,34 @@ import { useEffect, useState, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { HiStar, HiOutlineStar } from "react-icons/hi";
+import { RotatingLines } from "react-loader-spinner";
+
 const Stock = () => {
   const { user, isAuthenticated } = useAuth0();
   const [favourites, setFavourites] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavourite, setIsFavourite] = useState(false);
-  const [colour, setColour] = useState("");
   const { stock } = useParams();
   const [data, setData] = useState("");
   const [metaData, setMetaData] = useState("");
-  // TEMPORARY TO AVOID TOO MANY API REQUESTS
+
+  // FIRST WE GET THE STOCKS SEEKING ALPHA_ID AND THEN ONLY CAN WE FETCH ITS REAL TIME DATA
   useEffect(() => {
     setIsLoading(true);
     fetch(`/api/get-stock-id/${stock}`)
       .then((res) => res.json())
       .then((mdata) => {
-        console.log(mdata);
         setMetaData(mdata);
-        console.log(mdata.data.data.id);
         fetch(`/api/get-price/${mdata.data.data.id}`)
           .then((res) => res.json())
           .then((datax) => {
-            console.log(datax);
             setData(datax.data.real_time_quotes[0]);
             setIsLoading(false);
           });
       });
   }, [stock]);
 
+  // VERIFY IF ITS ONE OF OUR FAVOURITES TO TRIGGER THE STAR
   useEffect(() => {
     const fetchFavourite = async () => {
       try {
@@ -40,8 +40,6 @@ const Stock = () => {
           const parsedResult = await fetchResult.json();
           setFavourites(parsedResult.data ?? []);
           setIsFavourite(parsedResult.data.includes(stock));
-          console.log(favourites.includes(stock));
-          console.log({ favourites });
         }
       } catch (error) {
         console.log(error);
@@ -52,6 +50,7 @@ const Stock = () => {
     fetchFavourite();
   }, [isAuthenticated]);
 
+  // WHEN WE CLICK ON THE STAR TO ADD TO FAVOURITES
   const handleFavourites = () => {
     const { email } = user;
     setIsFavourite(!isFavourite);
@@ -66,7 +65,6 @@ const Stock = () => {
         Accept: "application/json",
       });
       setFavourites(favourites.filter((favTicker) => favTicker !== stock));
-      console.log(`removed ${stock}`);
     } else {
       fetch("/api/add-favourite/", {
         method: "POST",
@@ -78,12 +76,22 @@ const Stock = () => {
         Accept: "application/json",
       });
       setFavourites([...favourites, stock]);
-      console.log(`added ${stock}`);
     }
   };
 
   if (isLoading) {
-    return <>Retrieving data...</>;
+    return (
+      <>
+        Retrieving data...
+        <RotatingLines
+          strokeColor="grey"
+          strokeWidth="5"
+          animationDuration="0.75"
+          width="25"
+          visible={true}
+        />
+      </>
+    );
   }
   const percentage = (data.last / data.prev_close - 1) * 100;
 
@@ -120,7 +128,7 @@ const Stock = () => {
           <h1>{data.lua.company}</h1>
           <Price>
             {" $" + data.sa_slug.toUpperCase()}
-            {" $" + data.last}
+            {" $" + data.last.toFixed(2)}
             {(data.last / data.prev_close - 1) * 100 > 0
               ? ` (⬆${percentage.toFixed(2)}%)`
               : ` (⬇${percentage.toFixed(2)}%)`}
@@ -135,27 +143,13 @@ const Stock = () => {
                 "(B)"}
             </div>
             <div>
-              {"Volume : $" + data.volume}
-
-              {/* {`${data.lastDaily.volumeAt}`} */}
+              {"Volume : $" +
+                data.volume.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </div>
             <div>{"Open : $" + data.open}</div>
-            <div>{"52-Week High : $" + data.lua.high_52w}</div>
-            <div>{"52-Week Low : $" + data.lua.low_52w}</div>
+            <div>{"52-Week High : $" + data.lua.high_52w.toFixed(2)}</div>
+            <div>{"52-Week Low : $" + data.lua.low_52w.toFixed(2)}</div>
           </div>
-
-          {/* <h3>About the company</h3>
-          <div>{" " + data.longDesc}</div>
-          <div>{data.primaryname}</div>
-
-          <div>
-            {"Located in: " +
-              data.city +
-              ", " +
-              data.state +
-              ", " +
-              data.country}
-          </div> */}
         </>
       )}
     </Wrapper>
@@ -179,7 +173,6 @@ const ToggleFavourite = styled.div`
   max-width: 35px;
   color: #966fd6;
   margin: 5px 5px 10px 2px;
-  /* position: absolute; */
   left: 0;
 `;
 
@@ -189,9 +182,11 @@ const Price = styled.div`
 `;
 
 const Img = styled.img`
-  width: 50px;
-  position:absolute;
-  right:0;
+  width: 97.5px;
+  height: 97.5px;
+  position: absolute;
+  top: 3px;
+  right: -130px;
   float: right;
   margin-right: 10px;
   object-fit: contain;

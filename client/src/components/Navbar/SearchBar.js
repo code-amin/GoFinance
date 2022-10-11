@@ -5,12 +5,13 @@ import Suggestion from "./Suggestion";
 const SearchBar = () => {
   const [query, setQuery] = useState("");
   const [result, setResult] = useState([]);
+
+  // SEND SEARCH QUERY TO API, AND IT RETURNS THE AUTOCOMPLETE RESULTS (MAX 10)
   const handleSubmit = async (e) => {
     e.preventDefault();
     fetch(`/api/get-search-suggestions/${query}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.data);
         setResult(data.data);
       });
   };
@@ -25,9 +26,10 @@ const SearchBar = () => {
             setQuery(e.target.value);
           }}
         />
-        <GoButton onClick={handleSubmit}>GO</GoButton>
+        <GoButton onClick={handleSubmit}>🔍</GoButton>
       </div>
       <>
+        {/* CREATE A UNORDERED LIST WITH THE RESULT OF THE FETCH */}
         {result && (
           <>
             <Ul>
@@ -81,8 +83,7 @@ const GoButton = styled.button`
     transition: all 0.4s;
   }
   &:active {
-    height: 31px;
-    transition: all 0.6s;
-    padding: 8px 13px 6px;
+    transition: all 0.01s;
+    background-color: var(--color-purple);
   }
 `;

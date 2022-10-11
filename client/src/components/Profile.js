@@ -1,23 +1,20 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { HiStar } from "react-icons/hi";
 import { Triangle } from "react-loader-spinner";
-
-// require("dotenv").config();
-
-// const { REACT_APP_UPLOAD_PRESET } = process.env;
 
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [fileInputState, setFileInputState] = useState("");
   const [profilePicture, setProfilePicture] = useState(user.picture);
   const [previewSource, setPreviewSource] = useState("");
+
   const handleFileInputChange = (event) => {
     const file = event.target.files[0];
     previewFile(file);
   };
+  // PREVIEW CHANGES IS DISABLED BUT STILL USED AS A CHECK 
   const previewFile = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -41,7 +38,7 @@ const Profile = () => {
       </div>
     );
   }
-
+  // UPLOAD A NEW PICTURE TO CLOUDINARY AND SENDS THE URL TO MONGODB IN USERS PROFILE
   const handleSubmitFile = (event) => {
     event.preventDefault();
     if (!previewSource) return;
@@ -49,7 +46,7 @@ const Profile = () => {
   };
   const uploadImage = async (base64EncodedImage) => {
     const { email } = user;
-
+// MAKE THE UPLOAD
     try {
       const response = await fetch("/api/update-profile", {
         method: "POST",

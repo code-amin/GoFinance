@@ -9,8 +9,8 @@ const options = {
   useUnifiedTopology: true,
 };
 
+// UPLOADS THE URL CREATED FROM CLOUDINARY TO MONGODB USER'S PROFILE PICTURE KEY
 const updateProfile = async (req, res) => {
-  console.log("updateProfile api triggered");
   const client = new MongoClient(REACT_APP_MONGO_URI);
 
   try {
@@ -19,15 +19,22 @@ const updateProfile = async (req, res) => {
     const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
       upload_preset: "gpyplrmb",
     });
-    // console.log(email, uploadedResponse.secure_url);
 
     await client.connect();
     const db = client.db("db-name");
-    const finding = await db.collection("users").updateOne({ email: email },{$set:{profilepicture:uploadedResponse.secure_url}} );
-
+    const finding = await db
+      .collection("users")
+      .updateOne(
+        { email: email },
+        { $set: { profilepicture: uploadedResponse.secure_url } }
+      );
 
     finding
-      ? res.status(200).json({ status: 200, data: finding, profile_url:uploadedResponse.secure_url })
+      ? res.status(200).json({
+          status: 200,
+          data: finding,
+          profile_url: uploadedResponse.secure_url,
+        })
       : res.status(400).json({ status: 400, message: "error while fetching" });
   } catch (e) {
     res.status(500).json({ err: "errrror" });

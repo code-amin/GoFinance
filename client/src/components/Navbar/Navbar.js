@@ -6,17 +6,16 @@ import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { IoPersonOutline } from "react-icons/io5";
 import { BsBookmark } from "react-icons/bs";
-import { useEffect, useState } from "react";
-import Menu from "./Menu";
 
 const Navbar = () => {
+// GET USER FROM AUTH0 CONTEXT
   const { user, isAuthenticated, isLoading } = useAuth0();
 
   return (
     <Wrapper>
       <Logo to="/">GoFinance </Logo>
       <SearchBar />
-
+{/* IF LOGGED IN, LOAD USER-ENABLED BUTTONS */}
       <LoginSection>
         {isAuthenticated ? (
           <>

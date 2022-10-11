@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 const NewsFeed = () => {
   const [data, setData] = useState(null);
-
+  // GET THE LATEST NEWS ARTICLES FROM
   useEffect(() => {
     fetch(`/api/get-news/`)
       .then((res) => res.json())
@@ -16,11 +15,12 @@ const NewsFeed = () => {
   return (
     <Wrapper>
       {<Header>Headlines</Header>}
-
+      {/* // POPULATE THE NEWS SECTION IF FETCH WAS SUCCESSFUL */}
       {data?.data.map((newsObject) => {
         return (
           <NewsSection>
             <NewsCard>
+              {/* // IF NO IMAGE IF GIVEN SET A BASIC ONE */}
               <Img
                 src={`${
                   newsObject.attributes.gettyImageUrl
@@ -57,8 +57,6 @@ const Wrapper = styled.div`
   padding: 20px;
   border: 1px solid var(--color-beige);
 `;
-
-// Stock feed section
 const NewsSection = styled.div`
   border: 2.5px var(--color-purple) solid;
   border-radius: 10px;
@@ -68,16 +66,15 @@ const NewsSection = styled.div`
   cursor: pointer;
   transition: all 0.6s ease-in-out;
   text-decoration: none;
-
   &:hover {
     transition: all 0.6s ease-in-out;
     background-color: #966fd6;
     color: var(--color-beige);
   }
 `;
-
 const Img = styled.img`
   width: 150px;
+  height: 120px;
   height: 100%;
   border-radius: 10px 0px 0px 10px;
   object-fit: cover;
@@ -98,7 +95,6 @@ const NewsCard = styled.div`
 `;
 const Anchor = styled.a`
   margin-top: 10px;
-
   &:focus,
   &:visited,
   &:link,

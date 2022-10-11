@@ -1,9 +1,8 @@
-// Will be a stretch
+// STRETCH GOAL -- HAMBURGER MENU
 import styled from "styled-components";
-
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import { IoPersonOutline, IoMenu } from "react-icons/io5";
+import { IoMenu } from "react-icons/io5";
 import { useState } from "react";
 
 const Menu = () => {

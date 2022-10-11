@@ -2,8 +2,8 @@
 require("dotenv").config();
 const { REACT_APP_API_KEY } = process.env;
 
+// GET SEARCH SUGGESTIONS BASED ON QUERY USER ENTERED IN SEARCH BAR
 const getSearchSuggestions = async (req, res) => {
-  console.log("getSearchSuggestions api triggered");
   const { query } = req.params;
 
   const url = `https://seeking-alpha.p.rapidapi.com/v2/auto-complete?query=${query}&type=symbols&size=10`;

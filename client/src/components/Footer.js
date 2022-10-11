@@ -5,10 +5,10 @@ const Footer = () => {
     <Wrapper>
       <Text>GoFinance © All rights reserved 2022</Text>
       <Text>Data provided by SeekingAlpha</Text>
-      <Text>Data provided b</Text>
-      <Text>Data provided by</Text>
-
-      <Text>Sitemap</Text>
+      <Text>Contact us</Text>
+      <Text>Careers</Text>
+      <Text>Disclosure</Text>
+      <Text>Privacy policy</Text>
     </Wrapper>
   );
 };

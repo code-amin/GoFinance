@@ -8,11 +8,12 @@ const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
-const removeFavourite = async (req, res) => {
-  console.log("addFavourite  api triggered");
-  const { email, ticker } = req.body;
 
+// REMOVES FAVOURITE FROM MONGODB FAVOURITES ARRAY
+const removeFavourite = async (req, res) => {
+  const { email, ticker } = req.body;
   const client = new MongoClient(REACT_APP_MONGO_URI);
+
   try {
     await client.connect();
     const db = client.db("db-name");

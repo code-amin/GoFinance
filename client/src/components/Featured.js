@@ -1,10 +1,14 @@
+// FEATURED STOCK IS THE ONE ON THE MAIN PAGE AND HAS BEEN MANUALLY SELECTED FOR THE MOMENT
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
 import { Triangle } from "react-loader-spinner";
+
 const Featured = () => {
   const [data, setData] = useState(null);
+  // TESLAS ID
   const featuredId = 16123;
+
+  // GET FEATURED STOCKS DATA
   useEffect(() => {
     fetch(`/api/get-price/${featuredId}`)
       .then((res) => res.json())
@@ -40,18 +44,16 @@ const Featured = () => {
               : ` (⬇${percentage.toFixed(2)}%)`}
           </Price>
 
-          {console.log((data.prev_close / data.last - 1) * 100)}
           <Name>{data.lua.company}</Name>
           {"$TSLA"}
-          <Details>{/* {"$" + data.id.toUpperCase()} */}</Details>
           <Technicals>
             <Details>
               {"MCap : $" + (data.market_cap / 1000000000).toFixed(2) + "(B)"}
             </Details>
             <Details>
+              {/* FORMAT MILLIONS WITH COMMAS */}
               {"Volume : $" +
                 data.volume.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-              {/* {`${data.lastDaily.volumeAt}`} */}
             </Details>
             <Details>{"Open : $" + data.open}</Details>
             <Details>{"52W High : $" + data.lua.high_52w}</Details>
@@ -77,7 +79,7 @@ const Wrapper = styled.div`
   position: relative;
   width: 300px;
   height: 400px;
-  background: var(--color-black);
+  background: #404040;
   margin: 20px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
   border-radius: 15px;
@@ -87,7 +89,6 @@ const Wrapper = styled.div`
   backdrop-filter: blur(10px);
   color: white;
 `;
-
 const Details = styled.div`
   padding: 3px 0 3px 0;
   font-size: 18px;
@@ -100,7 +101,6 @@ const Name = styled.div`
   font-size: 30px;
   padding: 20px 0 0 0;
 `;
-
 const Technicals = styled.div`
   padding: 20px 0 3px 0;
   color: var(--color-white);
