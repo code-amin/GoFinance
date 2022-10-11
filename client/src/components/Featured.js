@@ -38,7 +38,7 @@ const Featured = () => {
         <Details>
           <Price>
             {" "}
-            {"$" + data.last}
+            {"$" + data.last.toFixed(2)}
             {(data.last / data.prev_close - 1) * 100 > 0
               ? ` (⬆${percentage.toFixed(2)}%)`
               : ` (⬇${percentage.toFixed(2)}%)`}
@@ -55,7 +55,7 @@ const Featured = () => {
               {"Volume : $" +
                 data.volume.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </Details>
-            <Details>{"Open : $" + data.open}</Details>
+            <Details>{"Previous close : $" + data.prev_close}</Details>
             <Details>{"52W High : $" + data.lua.high_52w}</Details>
             <Details>{"52W Low : $" + data.lua.low_52w}</Details>
           </Technicals>
