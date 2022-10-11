@@ -18,7 +18,6 @@ const getStock = async (req, res) => {
   const response = await fetch(url, options);
 
   const parsedResponse = await response.json();
-  // console.log('getStock parsed',parsedResponse);
 
   response
     ? res.status(200).json({ status: 200, data: parsedResponse })
@@ -27,7 +26,7 @@ const getStock = async (req, res) => {
 
 const getPrice = async (req, res) => {
   console.log("getPrice api triggered");
-  const {id} = req.params;
+  const { id } = req.params;
 
   const url = `https://seeking-alpha.p.rapidapi.com/market/get-realtime-quotes?sa_ids=${id}`;
 
@@ -42,7 +41,6 @@ const getPrice = async (req, res) => {
   const response = await fetch(url, options);
 
   const parsedResponse = await response.json();
-  // console.log(parsedResponse);
 
   response
     ? res.status(200).json({ status: 200, data: parsedResponse })
@@ -51,7 +49,7 @@ const getPrice = async (req, res) => {
 
 const getStockId = async (req, res) => {
   console.log("getStockId api triggered");
-  const {id} = req.params;
+  const { id } = req.params;
   const url = `https://seeking-alpha.p.rapidapi.com/symbols/get-meta-data?symbol=${id}`;
 
   const options = {
@@ -65,7 +63,6 @@ const getStockId = async (req, res) => {
   const response = await fetch(url, options);
 
   const parsedResponse = await response.json();
-  // console.log('getStock parsed',parsedResponse);
 
   response
     ? res.status(200).json({ status: 200, data: parsedResponse })

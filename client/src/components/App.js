@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import GlobalStyles from "./GlobalStyles";
-
 import Home from "./Home";
 import Navbar from "./Navbar/Navbar";
 import Profile from "./Profile";
@@ -31,7 +30,6 @@ const AppWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: tomato; */
   min-height: calc(100vh - 120px);
 `;
 

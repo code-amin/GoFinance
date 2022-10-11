@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import styled from "styled-components";
 import Suggestion from "./Suggestion";
 
@@ -48,14 +47,13 @@ export default SearchBar;
 const Wrapper = styled.div`
   display: inline-block;
   left: 150px;
-  /* flex-direction: column; */
   position: absolute;
   min-height: 50px;
   max-height: 50px;
 `;
 
 const Search = styled.input`
-  background-color: #f2f2f2;
+  background-color: var(--color-beige);
   border-radius: 5px;
   max-height: 50px;
   height: 30px;
@@ -72,9 +70,19 @@ const Ul = styled.ul`
 `;
 
 const GoButton = styled.button`
-  background-color: #f2f2f2;
+  background-color: var(--color-beige);
   border-radius: 5px;
   height: 30px;
-  border: 1px solid transparent;
+  border: 1px solid var(--color-purple);
   margin: 10px 0px 0px 2px;
+
+  &:hover {
+    color: var(--color-purple);
+    transition: all 0.4s;
+  }
+  &:active {
+    height: 31px;
+    transition: all 0.6s;
+    padding: 8px 13px 6px;
+  }
 `;

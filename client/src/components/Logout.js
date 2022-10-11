@@ -34,4 +34,8 @@ const Button = styled(Link)`
   border: none;
   color: var(--color-beige);
   text-decoration: none;
+  &:hover {
+    color: lightgrey;
+    transition: all 0.4s;
+  }
 `;

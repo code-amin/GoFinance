@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { HiStar } from "react-icons/hi";
+import { Triangle } from "react-loader-spinner";
 
 // require("dotenv").config();
 
@@ -24,9 +25,21 @@ const Profile = () => {
       setPreviewSource(reader.result);
     };
   };
-  console.log(user);
+
   if (isLoading) {
-    return <div>Loading ...</div>;
+    return (
+      <div>
+        <Triangle
+          height="425"
+          width="320"
+          color="#2de054"
+          ariaLabel="triangle-loading"
+          wrapperStyle={{}}
+          wrapperClassName=""
+          visible={true}
+        />
+      </div>
+    );
   }
 
   const handleSubmitFile = (event) => {

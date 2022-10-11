@@ -6,28 +6,22 @@ import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { IoPersonOutline } from "react-icons/io5";
 import { BsBookmark } from "react-icons/bs";
-
 import { useEffect, useState } from "react";
 import Menu from "./Menu";
+
 const Navbar = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
-  // console.log(user.picture);
-  useEffect(() => {
-    //fetch to update user with profile image
-    fetch("/api/update-profile");
-  });
-
   return (
     <Wrapper>
-      <Logo to="/">GoFinance</Logo>
+      <Logo to="/">GoFinance </Logo>
       <SearchBar />
-      
+
       <LoginSection>
         {isAuthenticated ? (
           <>
-            <FavouritesIcon to='favourites'>
-              <BsBookmark/>
+            <FavouritesIcon to="favourites">
+              <BsBookmark />
             </FavouritesIcon>
             <ProfileIconSection to="/Profile">
               <IoPersonOutline />
@@ -62,17 +56,25 @@ const Logo = styled(Link)`
   padding: 6px;
   text-decoration: none;
   font-size: 20px;
+  &:hover {
+    color: var(--color-blue);
+    transition: all 0.4s;
+  }
 `;
 
 const LoginSection = styled.div`
-  min-height: 50px;
+  min-height: 30px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-between;
   background-color: #8758ff;
   color: #8758ff;
-  padding: 3px;
+  padding-right: 10px;
+  &:hover {
+    color: var(--color-blue);
+    transition: all 0.4s;
+  }
 `;
 
 const ProfileIconSection = styled(Link)`
@@ -80,10 +82,20 @@ const ProfileIconSection = styled(Link)`
   font-size: 30px;
   position: relative;
   top: 7px;
+  padding-right: 10px;
+  &:hover {
+    color: var(--color-blue);
+    transition: all 0.4s;
+  }
 `;
 const FavouritesIcon = styled(Link)`
   color: white;
   font-size: 30px;
   position: relative;
   top: 7px;
+  padding-right: 10px;
+  &:hover {
+    color: var(--color-blue);
+    transition: all 0.4s;
+  }
 `;
