@@ -15,16 +15,18 @@ const Stock = () => {
   const [metaData, setMetaData] = useState("");
 
   // FIRST WE GET THE STOCKS SEEKING ALPHA_ID AND THEN ONLY CAN WE FETCH ITS REAL TIME DATA
+  // DOUBLE FETCH BECAUSE SEEKING ALPHA API GIVES THE UNIQUE ID THROUGH THE FIRST FETCH ONLY
   useEffect(() => {
     setIsLoading(true);
     fetch(`/api/get-stock-id/${stock}`)
       .then((res) => res.json())
-      .then((mdata) => {
-        setMetaData(mdata);
-        fetch(`/api/get-price/${mdata.data.data.id}`)
+      .then((stockMetaData) => {
+        console.log("stockMetaData:", stockMetaData);
+        setMetaData(stockMetaData);
+        fetch(`/api/get-price/${stockMetaData.data.data.id}`)
           .then((res) => res.json())
-          .then((datax) => {
-            setData(datax.data.real_time_quotes[0]);
+          .then((realTimeData) => {
+            setData(realTimeData.data.real_time_quotes[0]);
             setIsLoading(false);
           });
       });

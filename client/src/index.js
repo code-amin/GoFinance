@@ -9,13 +9,14 @@ const { REACT_APP_DOMAIN, REACT_APP_CLIENTID } = process.env;
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-   <React.StrictMode>
-    <Auth0Provider
-      domain={REACT_APP_DOMAIN}
-      clientId={REACT_APP_CLIENTID}
-      redirectUri={window.location.origin}
-    >
-      <App />
-    </Auth0Provider>
-   </React.StrictMode> 
+  // Temporary remove strict mode(creates double requests)
+  //<React.StrictMode>
+  <Auth0Provider
+    domain={REACT_APP_DOMAIN}
+    clientId={REACT_APP_CLIENTID}
+    redirectUri={window.location.origin}
+  >
+    <App />
+  </Auth0Provider>
+  /* </React.StrictMode>  */
 );
