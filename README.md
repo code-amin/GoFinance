@@ -32,6 +32,3 @@ Favourites page
 Logged in and authenticated/account created via Auth0
 
 ![Screen Shot 2022-10-16 at 9 12 20 PM](https://user-images.githubusercontent.com/73975219/196069347-579bef4b-eaae-4bf8-870c-33448ced8d12.png)
-
-
->this is a work in progress
